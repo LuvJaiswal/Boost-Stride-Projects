@@ -1,0 +1,32 @@
+// -----------------------------------------------------------------------------
+// Theme Engine
+// Bridges SCSS maps to usable variables and CSS custom properties.
+// -----------------------------------------------------------------------------
+
+@function get-theme-val($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+
+    @return $map;
+}
+
+// Global active theme pointer (defaulted)
+$active-theme: $theme-default !default;
+
+// Map logical names to variables
+$theme-primary: get-theme-val($active-theme, "colors", "primary");
+$theme-secondary: get-theme-val($active-theme, "colors", "secondary");
+$theme-accent: get-theme-val($active-theme, "colors", "accent");
+$theme-bg: get-theme-val($active-theme, "colors", "background");
+$theme-text: get-theme-val($active-theme, "colors", "text");
+$theme-radius: get-theme-val($active-theme, "borders", "radius");
+
+// Global CSS variable export for runtime
+:root {
+    --t-primary: #{$theme-primary};
+    --t-secondary: #{$theme-secondary};
+    --t-bg: #{$theme-bg};
+    --t-text: #{$theme-text};
+    --t-radius: #{$theme-radius};
+}

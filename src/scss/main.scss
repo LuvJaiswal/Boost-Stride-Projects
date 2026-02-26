@@ -5,10 +5,15 @@
 
 // 1. Abstracts
 @import 'abstracts/variables';
-@import 'abstracts/mixins';
+@import 'themes/theme-default';
+@import 'themes/theme-dark';
+@import 'themes/theme-blue';
 
-// 2. Themes
-@import 'themes/config';
+// STEP: Switch theme here by changing the map
+$active-theme: $theme-default;
+
+@import 'abstracts/theme-engine';
+@import 'abstracts/mixins';
 
 // 3. Base
 @import 'base/globals';

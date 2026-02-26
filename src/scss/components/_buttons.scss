@@ -10,12 +10,13 @@
     justify-content: center;
 
     &--primary {
-        background-color: $brand-primary;
-        color: $brand-white;
-        border: 1px solid $brand-primary;
+        background-color: $theme-primary;
+        color: get-theme-val($active-theme, "colors", "white");
+        border: 1px solid $theme-primary;
+        border-radius: $theme-radius;
 
         &:hover {
-            background-color: darken($brand-primary, 10%);
+            background-color: darken($theme-primary, 10%);
         }
     }
 
