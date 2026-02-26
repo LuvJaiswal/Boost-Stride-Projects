@@ -1,0 +1,53 @@
+// -----------------------------------------------------------------------------
+// Navbar Layout
+// -----------------------------------------------------------------------------
+
+.l-navbar {
+    &.sticky-top {
+        top: -100px;
+        transition: $transition-speed;
+    }
+
+    &__brand,
+    &__link-action {
+        height: 75px;
+    }
+
+    &__nav-link {
+        margin-right: 30px;
+        padding: 25px 0;
+        color: $brand-dark;
+        font-size: 15px;
+        font-weight: 500;
+        text-transform: uppercase;
+        outline: none;
+
+        &:hover,
+        &.active {
+            color: $brand-primary;
+        }
+
+        @media (max-width: 991.98px) {
+            margin-right: 0;
+            padding: 10px 0;
+        }
+    }
+
+    &__dropdown-menu {
+        @media (min-width: 992px) {
+            display: block;
+            border: none;
+            margin-top: 0;
+            top: 150%;
+            opacity: 0;
+            visibility: hidden;
+            transition: $transition-speed;
+        }
+    }
+
+    &__nav-item:hover &__dropdown-menu {
+        top: 100%;
+        visibility: visible;
+        opacity: 1;
+    }
+}

@@ -1,0 +1,40 @@
+// -----------------------------------------------------------------------------
+// Cards and generic service items
+// -----------------------------------------------------------------------------
+
+.c-service-item {
+    img {
+        transition: $transition-speed;
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
+}
+
+.c-portfolio-item {
+    img {
+        transition: $transition-speed;
+    }
+
+    &:hover img {
+        transform: scale(1.1);
+    }
+
+    &__overlay {
+        position: absolute;
+        @include flex-center;
+        width: 0;
+        height: 0;
+        bottom: 0;
+        left: 50%;
+        background: rgba($brand-dark, .7);
+        transition: $transition-speed;
+    }
+
+    &:hover &__overlay {
+        width: 100%;
+        height: 100%;
+        left: 0;
+    }
+}

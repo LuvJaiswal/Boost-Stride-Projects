@@ -1,0 +1,29 @@
+// -----------------------------------------------------------------------------
+// Main Manifest File
+// Imports the 7-1 pattern in the correct cascade order.
+// -----------------------------------------------------------------------------
+
+// 1. Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// 2. Themes
+@import 'themes/config';
+
+// 3. Base
+@import 'base/globals';
+
+// 4. Layout
+@import 'layout/navbar';
+@import 'layout/footer';
+
+// 5. Components
+@import 'components/buttons';
+@import 'components/spinner';
+@import 'components/cards';
+
+// 6. Pages
+@import 'pages/home';
+
+// 7. Vendors (optional overrides)
+// @import 'vendors/bootstrap-overrides';

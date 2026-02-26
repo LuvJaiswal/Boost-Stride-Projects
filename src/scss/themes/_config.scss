@@ -1,0 +1,19 @@
+// -----------------------------------------------------------------------------
+// Client Branding Config
+// Update this file for each new client/resell instance.
+// -----------------------------------------------------------------------------
+
+$brand-primary: #AB7442 !default; // Main Brand Color
+$brand-light: #F5F5F5 !default; // Background / Light Sections
+$brand-dark: #353535 !default; // Text / Dark Sections
+$brand-white: #FFFFFF !default;
+
+$border-radius: 0;
+
+// Export to CSS variables for JS/Runtime access
+:root {
+    --primary: #{$brand-primary};
+    --light: #{$brand-light};
+    --dark: #{$brand-dark};
+    --white: #{$brand-white};
+}

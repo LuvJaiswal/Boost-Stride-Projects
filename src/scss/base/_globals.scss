@@ -1,0 +1,30 @@
+// -----------------------------------------------------------------------------
+// Base Styles
+// Reset, globals, and common typography.
+// -----------------------------------------------------------------------------
+
+body {
+    font-family: $system-font-stack-alt;
+    color: $brand-dark;
+}
+
+.fw-medium {
+    font-weight: 500 !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+.fw-black {
+    font-weight: 900 !important;
+}
+
+a {
+    transition: $transition-speed;
+    text-decoration: none;
+
+    &:hover {
+        color: $brand-primary;
+    }
+}

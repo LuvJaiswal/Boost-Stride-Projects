@@ -1,0 +1,21 @@
+// -----------------------------------------------------------------------------
+// Home Page Styles
+// -----------------------------------------------------------------------------
+
+.p-home {
+    &__carousel {
+        .owl-carousel-item {
+            @media (max-width: 768px) {
+                position: relative;
+                min-height: 500px;
+
+                img {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}

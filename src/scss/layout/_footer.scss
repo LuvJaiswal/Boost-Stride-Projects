@@ -1,0 +1,52 @@
+// -----------------------------------------------------------------------------
+// Footer Layout
+// -----------------------------------------------------------------------------
+
+.l-footer {
+    background: linear-gradient(rgba($brand-dark, .7), rgba($brand-dark, .7)), url(../img/footer.jpg) center center no-repeat;
+    background-size: cover;
+
+    &__social-btn {
+        margin-right: 5px;
+        width: 35px;
+        height: 35px;
+        @include flex-center;
+        color: $brand-light;
+        border: 1px solid $brand-white;
+        transition: 0.3s;
+
+        &:hover {
+            color: $brand-primary;
+        }
+    }
+
+    &__link {
+        display: block;
+        margin-bottom: 5px;
+        padding: 0;
+        text-align: left;
+        color: $brand-white;
+        font-size: 15px;
+        text-transform: capitalize;
+        transition: 0.3s;
+
+        &::before {
+            position: relative;
+            content: "\f105";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        &:hover {
+            color: $brand-primary;
+            letter-spacing: 1px;
+        }
+    }
+
+    &__copyright {
+        padding: 25px 0;
+        font-size: 15px;
+        border-top: 1px solid rgba($brand-white, .1);
+    }
+}

@@ -1,0 +1,16 @@
+// -----------------------------------------------------------------------------
+// System Variables
+// These are framework-level defaults that shouldn't change per client.
+// -----------------------------------------------------------------------------
+
+$system-font-stack: "Roboto", sans-serif;
+$system-font-stack-alt: "Open Sans", sans-serif;
+
+$transition-speed: 0.5s;
+$transition-ease: ease-out;
+
+$z-index-sticky: 1020;
+$z-index-dropdown: 1000;
+$z-index-modal: 1050;
+$z-index-spinner: 99999;
+$z-index-back-top: 99;
