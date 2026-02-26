@@ -1,0 +1,51 @@
+{
+    "site": {
+        "name": "Boost Stride",
+        "tagline": "Professional Automotive Services"
+    },
+    "hero": {
+        "subtitle": "Welcome To Boost Stride",
+        "title": "Best Automotive & Maintenance Services",
+        "description": "Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.",
+        "primaryBtn": "Read More",
+        "secondaryBtn": "Free Quote"
+    },
+    "services": [
+        {
+            "id": "s1",
+            "title": "General Auto Repair",
+            "description": "Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.",
+            "image": "img/service-1.jpg",
+            "link": "#"
+        },
+        {
+            "id": "s2",
+            "title": "Furniture Manufacturing",
+            "description": "Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.",
+            "image": "img/service-2.jpg",
+            "link": "#"
+        },
+        {
+            "id": "s3",
+            "title": "Furniture Remodeling",
+            "description": "Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.",
+            "image": "img/service-3.jpg",
+            "link": "#"
+        }
+    ],
+    "testimonials": [
+        {
+            "name": "Client Name",
+            "profession": "Profession",
+            "text": "Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed.",
+            "image": "img/testimonial-1.jpg"
+        }
+    ],
+    "footer": {
+        "address": "123 Street, New York, USA",
+        "phone": "+012 345 67890",
+        "email": "info@example.com",
+        "aboutText": "Dolor amet sit justo amet elitr clita ipsum elitr est.",
+        "copyright": "Boost Stride"
+    }
+}
