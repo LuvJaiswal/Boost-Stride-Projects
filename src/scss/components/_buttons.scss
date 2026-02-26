@@ -3,38 +3,67 @@
 // -----------------------------------------------------------------------------
 
 .c-btn {
-    font-weight: 500;
-    transition: $transition-speed;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-weight: 500;
+    font-family: get-theme-val($active-theme, "fonts", "main");
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: $theme-radius;
+    transition: all $transition-speed $transition-ease;
+    cursor: pointer;
+    border: 1px solid transparent;
 
     &--primary {
         background-color: $theme-primary;
         color: get-theme-val($active-theme, "colors", "white");
-        border: 1px solid $theme-primary;
-        border-radius: $theme-radius;
+        border-color: $theme-primary;
 
         &:hover {
             background-color: darken($theme-primary, 10%);
+            border-color: darken($theme-primary, 10%);
+        }
+    }
+
+    &--outline {
+        background-color: transparent;
+        color: $theme-primary;
+        border-color: $theme-primary;
+
+        &:hover {
+            background-color: $theme-primary;
+            color: get-theme-val($active-theme, "colors", "white");
+        }
+    }
+
+    &--light {
+        background-color: get-theme-val($active-theme, "colors", "secondary");
+        color: $theme-accent;
+        border-color: get-theme-val($active-theme, "colors", "secondary");
+
+        &:hover {
+            background-color: darken(get-theme-val($active-theme, "colors", "secondary"), 5%);
         }
     }
 
     &--square {
-        width: 38px;
-        height: 38px;
+        width: 3rem;
+        height: 3rem;
         padding: 0;
     }
 
-    &--sm-square {
-        width: 32px;
-        height: 32px;
-        padding: 0;
+    &--sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
     }
 
-    &--lg-square {
-        width: 48px;
-        height: 48px;
-        padding: 0;
+    &--lg {
+        padding: 1rem 2rem;
+        font-size: 1.25rem;
     }
 }

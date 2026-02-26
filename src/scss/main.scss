@@ -26,6 +26,10 @@ $active-theme: $theme-default;
 @import 'components/buttons';
 @import 'components/spinner';
 @import 'components/cards';
+@import 'components/forms';
+@import 'components/hero';
+@import 'components/testimonials';
+@import 'components/pricing';
 
 // 6. Pages
 @import 'pages/home';

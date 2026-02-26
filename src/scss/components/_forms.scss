@@ -1,0 +1,56 @@
+// -----------------------------------------------------------------------------
+// Forms Component
+// -----------------------------------------------------------------------------
+
+.c-form {
+    &__group {
+        margin-bottom: 1.5rem;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: $theme-accent;
+    }
+
+    &__input,
+    &__textarea,
+    &__select {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: $theme-text;
+        background-color: $theme-bg;
+        background-clip: padding-box;
+        border: 1px solid rgba($theme-accent, 0.15);
+        border-radius: $theme-radius;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+        &:focus {
+            color: $theme-text;
+            background-color: $theme-bg;
+            border-color: lighten($theme-primary, 20%);
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba($theme-primary, 0.1);
+        }
+
+        &::placeholder {
+            color: rgba($theme-text, 0.5);
+            opacity: 1;
+        }
+    }
+
+    &__textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    &__submit {
+        width: 100%;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+}

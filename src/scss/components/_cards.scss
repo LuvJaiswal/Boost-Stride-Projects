@@ -1,40 +1,82 @@
 // -----------------------------------------------------------------------------
-// Cards and generic service items
+// Cards Component
 // -----------------------------------------------------------------------------
 
-.c-service-item {
-    img {
-        transition: $transition-speed;
+.c-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: $theme-bg;
+    background-clip: border-box;
+    border: 1px solid rgba($theme-accent, 0.125);
+    border-radius: $theme-radius;
+    overflow: hidden;
+    transition: transform $transition-speed $transition-ease, box-shadow $transition-speed $transition-ease;
+
+    &--hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba($theme-accent, 0.175);
     }
 
-    &:hover img {
+    &__img-wrapper {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            transition: transform $transition-speed $transition-ease;
+        }
+    }
+
+    &--hover:hover &__img-wrapper img {
         transform: scale(1.1);
     }
-}
 
-.c-portfolio-item {
-    img {
-        transition: $transition-speed;
+    &__body {
+        flex: 1 1 auto;
+        padding: 1.5rem;
+        text-align: center;
     }
 
-    &:hover img {
-        transform: scale(1.1);
+    &__title {
+        margin-bottom: 0.75rem;
+        color: $theme-accent;
+        font-family: get-theme-val($active-theme, "fonts", "heading");
+    }
+
+    &__text {
+        font-size: 0.95rem;
+        color: $theme-text;
+        margin-bottom: 1.25rem;
     }
 
     &__overlay {
         position: absolute;
-        @include flex-center;
-        width: 0;
-        height: 0;
-        bottom: 0;
-        left: 50%;
-        background: rgba($brand-dark, .7);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($theme-accent, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
         transition: $transition-speed;
+
+        .c-btn {
+            transform: translateY(20px);
+            transition: $transition-speed;
+        }
     }
 
     &:hover &__overlay {
-        width: 100%;
-        height: 100%;
-        left: 0;
+        opacity: 1;
+
+        .c-btn {
+            transform: translateY(0);
+        }
     }
 }

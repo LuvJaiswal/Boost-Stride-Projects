@@ -1,0 +1,38 @@
+// -----------------------------------------------------------------------------
+// Testimonials Component
+// -----------------------------------------------------------------------------
+
+.c-testimonial {
+    padding: 2.5rem;
+    background: $theme-bg;
+    border: 5px solid get-theme-val($active-theme, "colors", "secondary");
+    border-radius: $theme-radius;
+    text-align: center;
+    transition: $transition-speed;
+
+    &__img {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        padding: 0.5rem;
+        background: get-theme-val($active-theme, "colors", "secondary");
+    }
+
+    &__text {
+        font-style: italic;
+        margin-bottom: 1.5rem;
+        color: $theme-text;
+    }
+
+    &__author {
+        margin-bottom: 0.25rem;
+        color: $theme-accent;
+        font-weight: 700;
+    }
+
+    &__role {
+        font-size: 0.875rem;
+        color: $theme-primary;
+    }
+}

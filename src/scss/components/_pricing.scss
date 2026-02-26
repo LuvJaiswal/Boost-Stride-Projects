@@ -1,0 +1,81 @@
+// -----------------------------------------------------------------------------
+// Pricing Table Component
+// -----------------------------------------------------------------------------
+
+.c-pricing {
+    &__table {
+        background: $theme-bg;
+        border: 1px solid rgba($theme-accent, 0.1);
+        border-radius: $theme-radius;
+        padding: 3rem 2rem;
+        text-align: center;
+        transition: all $transition-speed $transition-ease;
+
+        &--featured {
+            border: 2px solid $theme-primary;
+            transform: scale(1.05);
+            box-shadow: 0 1rem 3rem rgba($theme-accent, 0.1);
+            z-index: 10;
+
+            @media (max-width: 992px) {
+                transform: none;
+            }
+        }
+    }
+
+    &__header {
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        text-transform: uppercase;
+        font-weight: 700;
+        color: $theme-accent;
+        margin-bottom: 1rem;
+    }
+
+    &__price {
+        font-size: 3rem;
+        font-weight: 700;
+        color: $theme-primary;
+
+        span {
+            font-size: 1rem;
+            color: $theme-text;
+            font-weight: 400;
+        }
+    }
+
+    &__features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem;
+        text-align: left;
+
+        li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba($theme-accent, 0.05);
+            color: $theme-text;
+            display: flex;
+            align-items: center;
+
+            &::before {
+                content: "\f00c";
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                color: $theme-primary;
+                margin-right: 1rem;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+
+    &__footer {
+        .c-btn {
+            width: 100%;
+        }
+    }
+}

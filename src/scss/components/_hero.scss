@@ -1,0 +1,67 @@
+// -----------------------------------------------------------------------------
+// Hero Section Component
+// -----------------------------------------------------------------------------
+
+.c-hero {
+    position: relative;
+    padding: 10rem 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: get-theme-val($active-theme, "colors", "white");
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($theme-accent, 0.7);
+        z-index: 1;
+    }
+
+    &__content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    &__subtitle {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: $theme-primary;
+    }
+
+    &__title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-family: get-theme-val($active-theme, "fonts", "heading");
+
+        @media (max-width: 768px) {
+            font-size: 2.25rem;
+        }
+    }
+
+    &__description {
+        font-size: 1.25rem;
+        margin-bottom: 2.5rem;
+        opacity: 0.9;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
