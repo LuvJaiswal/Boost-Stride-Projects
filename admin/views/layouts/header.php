@@ -182,6 +182,9 @@
         <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
             <i class="fas fa-search"></i> SEO & Meta
         </a>
+        <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
+            <i class="fas fa-shoe-prints"></i> Footer Section
+        </a>
         <hr>
         <a href="logout.php" class="text-danger">
             <i class="fas fa-sign-out-alt"></i> Logout
@@ -216,6 +219,9 @@
                 </a>
                 <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
                     <i class="fas fa-search"></i> SEO & Meta
+                </a>
+                <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
+                    <i class="fas fa-shoe-prints"></i> Footer Section
                 </a>
                 <hr>
                 <a href="logout.php" class="text-danger">

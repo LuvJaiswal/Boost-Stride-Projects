@@ -78,7 +78,6 @@ class ContentLoader {
 
     populateStaticText() {
         // Map JSON keys to HTML IDs
-        // Note: The API structure might differ slightly from the old static JSON
         const mapping = {
             "hero-subtitle": this.data.hero?.subtitle,
             "hero-title": this.data.hero?.title,
@@ -88,20 +87,56 @@ class ContentLoader {
             "footer-address": (this.data.contact?.address),
             "footer-phone": (this.data.contact?.phone),
             "footer-email": (this.data.contact?.email),
-            "footer-copyright": (this.data.seo?.title || "Boost Stride")
+            "footer-title-address": this.data.footer?.titles?.address,
+            "footer-title-services": this.data.footer?.titles?.services,
+            "footer-title-links": this.data.footer?.titles?.links,
+            "footer-title-newsletter": this.data.footer?.titles?.newsletter,
+            "footer-newsletter-text": this.data.footer?.newsletter_text,
+            "footer-newsletter-button": this.data.footer?.newsletter_button,
+            "footer-copyright": (this.data.footer?.copyright_text || this.data.seo?.title || "Boost Stride")
         };
 
         Object.entries(mapping).forEach(([id, value]) => {
             const el = document.getElementById(id);
             if (el && value) el.textContent = value;
         });
+
+        // 1.2 Attributes & Links
+        const newsletterInput = document.getElementById("footer-newsletter-placeholder");
+        if (newsletterInput && this.data.footer?.newsletter_placeholder) {
+            newsletterInput.setAttribute('placeholder', this.data.footer.newsletter_placeholder);
+        }
+
+        const linkMapping = {
+            "footer-facebook": this.data.footer?.social?.facebook,
+            "footer-twitter": this.data.footer?.social?.twitter,
+            "footer-youtube": this.data.footer?.social?.youtube,
+            "footer-linkedin": this.data.footer?.social?.linkedin,
+            "footer-instagram": this.data.footer?.social?.instagram
+        };
+
+        Object.entries(linkMapping).forEach(([id, value]) => {
+            const el = document.getElementById(id);
+            if (el && value) el.setAttribute('href', value);
+        });
+
+        // 1.3 Quick Links Renderer
+        const qlContainer = document.getElementById("footer-quick-links-container");
+        if (qlContainer && this.data.footer?.quick_links) {
+            qlContainer.innerHTML = this.data.footer.quick_links
+                .filter(link => link.label.trim() !== "")
+                .map(link => `<a class="btn btn-link" href="${link.url}">${link.label}</a>`)
+                .join('');
+        }
     }
 
     renderServices() {
         const container = document.getElementById("services-container");
-        if (!container || !this.data.services || this.data.services.length === 0) return;
+        const footerContainer = document.getElementById("footer-services-container");
 
-        container.innerHTML = this.data.services.map(service => `
+        if ((!container && !footerContainer) || !this.data.services || this.data.services.length === 0) return;
+
+        const servicesHtml = this.data.services.map(service => `
             <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="service-item">
                     <div class="overflow-hidden">
@@ -115,6 +150,14 @@ class ContentLoader {
                 </div>
             </div>
         `).join('');
+
+        if (container) container.innerHTML = servicesHtml;
+
+        if (footerContainer) {
+            footerContainer.innerHTML = this.data.services.slice(0, 5).map(service => `
+                <a class="btn btn-link" href="service.php">${service.title}</a>
+            `).join('');
+        }
     }
 
     renderTestimonials() {

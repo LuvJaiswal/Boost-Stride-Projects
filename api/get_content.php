@@ -42,6 +42,7 @@ try {
             "hero" => json_decode($settingsRaw['hero_data'] ?? '{"title": "Welcome to Boost Stride", "subtitle": "Professional Auto Shop"}'),
             "contact" => json_decode($settingsRaw['contact_info'] ?? '{"phone": "+012 345 6789", "email": "info@example.com"}'),
             "seo" => json_decode($settingsRaw['seo_data'] ?? '{"title": "Boost Stride"}'),
+            "footer" => json_decode($settingsRaw['footer_data'] ?? '{}'),
             "services" => $services,
             "testimonials" => $testimonials
         ]

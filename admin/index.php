@@ -39,6 +39,9 @@ switch($page) {
     case 'seo':
         include 'views/pages/seo.php';
         break;
+    case 'footer':
+        include 'views/pages/footer.php';
+        break;
     default:
         include 'views/pages/dashboard.php';
         break;
