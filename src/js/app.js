@@ -93,7 +93,8 @@ class ContentLoader {
             "footer-title-newsletter": this.data.footer?.titles?.newsletter,
             "footer-newsletter-text": this.data.footer?.newsletter_text,
             "footer-newsletter-button": this.data.footer?.newsletter_button,
-            "footer-copyright": (this.data.footer?.copyright_text || this.data.seo?.title || "Boost Stride")
+            "footer-copyright": (this.data.footer?.copyright_text || this.data.seo?.title || "Boost Stride"),
+            "nav-brand-text": this.data.menu?.brand_name
         };
 
         Object.entries(mapping).forEach(([id, value]) => {
@@ -105,6 +106,12 @@ class ContentLoader {
         const newsletterInput = document.getElementById("footer-newsletter-placeholder");
         if (newsletterInput && this.data.footer?.newsletter_placeholder) {
             newsletterInput.setAttribute('placeholder', this.data.footer.newsletter_placeholder);
+        }
+
+        const ctaBtn = document.getElementById("nav-cta-button");
+        if (ctaBtn && this.data.menu?.cta_text) {
+            ctaBtn.innerHTML = `${this.data.menu.cta_text}<i class="fa fa-arrow-right ms-3"></i>`;
+            if (this.data.menu.cta_url) ctaBtn.setAttribute('href', this.data.menu.cta_url);
         }
 
         const linkMapping = {
@@ -128,6 +135,41 @@ class ContentLoader {
                 .map(link => `<a class="btn btn-link" href="${link.url}">${link.label}</a>`)
                 .join('');
         }
+
+        // 1.4 Main Navbar Renderer
+        this.renderNavbar();
+    }
+
+    renderNavbar() {
+        const container = document.getElementById("main-nav-container");
+        if (!container || !this.data.menu?.main_menu) return;
+
+        const currentPath = window.location.pathname.split('/').pop() || 'index.php';
+
+        container.innerHTML = this.data.menu.main_menu.map(item => {
+            if (item.type === 'dropdown' && item.children && item.children.length > 0) {
+                // Check if any child is active to highlight parent
+                const isAnyChildActive = item.children.some(child => currentPath === child.url);
+                const activeClass = isAnyChildActive ? 'active' : '';
+
+                const subItemsHtml = item.children.map(child => {
+                    const childActive = currentPath === child.url ? 'active' : '';
+                    return `<a href="${child.url}" class="dropdown-item ${childActive}">${child.label}</a>`;
+                }).join('');
+
+                return `
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle ${activeClass}" data-bs-toggle="dropdown">${item.label}</a>
+                        <div class="dropdown-menu fade-up m-0">
+                            ${subItemsHtml}
+                        </div>
+                    </div>
+                `;
+            } else {
+                const isActive = currentPath === item.url ? 'active' : '';
+                return `<a href="${item.url}" class="nav-item nav-link ${isActive}">${item.label}</a>`;
+            }
+        }).join('');
     }
 
     renderServices() {

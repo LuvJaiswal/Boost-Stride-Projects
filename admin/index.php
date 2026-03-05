@@ -42,6 +42,9 @@ switch($page) {
     case 'footer':
         include 'views/pages/footer.php';
         break;
+    case 'menu':
+        include 'views/pages/menu.php';
+        break;
     default:
         include 'views/pages/dashboard.php';
         break;

@@ -104,65 +104,67 @@ $current = array_merge($defaults, $current);
             <div class="col-lg-6 mb-4">
                 <div class="card p-4 h-100 border-0 shadow-sm">
                     <h5 class="fw-bold mb-4 text-primary"><i class="fas fa-heading me-2"></i>Column Titles</h5>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">ADDRESS TITLE</label>
-                            <input type="text" name="title_address" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['titles']['address']); ?>" required>
+                    <div class="row row-cols-1 row-cols-sm-2 g-3">
+                        <div class="col mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">ADDRESS TITLE</label>
+                            <input type="text" name="title_address" class="form-control" value="<?php echo htmlspecialchars($current['titles']['address']); ?>" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">SERVICES TITLE</label>
-                            <input type="text" name="title_services" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['titles']['services']); ?>" required>
+                        <div class="col mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">SERVICES TITLE</label>
+                            <input type="text" name="title_services" class="form-control" value="<?php echo htmlspecialchars($current['titles']['services']); ?>" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">QUICK LINKS TITLE</label>
-                            <input type="text" name="title_links" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['titles']['links']); ?>" required>
+                        <div class="col mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">QUICK LINKS TITLE</label>
+                            <input type="text" name="title_links" class="form-control" value="<?php echo htmlspecialchars($current['titles']['links']); ?>" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">NEWSLETTER TITLE</label>
-                            <input type="text" name="title_newsletter" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['titles']['newsletter']); ?>" required>
+                        <div class="col mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">NEWSLETTER TITLE</label>
+                            <input type="text" name="title_newsletter" class="form-control" value="<?php echo htmlspecialchars($current['titles']['newsletter']); ?>" required>
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-4 mt-4 text-primary"><i class="fas fa-paper-plane me-2"></i>Newsletter Details</h5>
+                    <h5 class="fw-bold mb-4 mt-5 text-primary"><i class="fas fa-paper-plane me-2"></i>Newsletter Details</h5>
                     <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">NEWSLETTER DESCRIPTION</label>
-                        <textarea name="newsletter_text" class="form-control rounded-3" rows="3" required><?php echo htmlspecialchars($current['newsletter_text']); ?></textarea>
+                        <label class="form-label fw-bold extra-small text-muted">DESCRIPTION</label>
+                        <textarea name="newsletter_text" class="form-control" rows="3" required><?php echo htmlspecialchars($current['newsletter_text']); ?></textarea>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">INPUT PLACEHOLDER</label>
-                            <input type="text" name="newsletter_placeholder" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['newsletter_placeholder']); ?>" required>
+                    <div class="row g-3">
+                        <div class="col-sm-6 mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">PLACEHOLDER</label>
+                            <input type="text" name="newsletter_placeholder" class="form-control" value="<?php echo htmlspecialchars($current['newsletter_placeholder']); ?>" required>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold small text-muted">BUTTON TEXT</label>
-                            <input type="text" name="newsletter_button" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['newsletter_button']); ?>" required>
+                        <div class="col-sm-6 mb-2">
+                            <label class="form-label fw-bold extra-small text-muted">BUTTON TEXT</label>
+                            <input type="text" name="newsletter_button" class="form-control" value="<?php echo htmlspecialchars($current['newsletter_button']); ?>" required>
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-4 mt-4 text-primary"><i class="fas fa-align-left me-2"></i>Misc Content</h5>
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small text-muted">COPYRIGHT BRAND NAME</label>
+                    <h5 class="fw-bold mb-4 mt-5 text-primary"><i class="fas fa-align-left me-2"></i>Misc Content</h5>
+                    <div class="mb-0">
+                        <label class="form-label fw-bold extra-small text-muted">COPYRIGHT BRAND NAME</label>
                         <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-copyright text-muted"></i></span>
+                            <span class="input-group-text bg-light border-end-0 text-muted px-3"><i class="fas fa-copyright"></i></span>
                             <input type="text" name="copyright_text" class="form-control rounded-end-3" value="<?php echo htmlspecialchars($current['copyright_text']); ?>" required>
                         </div>
                     </div>
 
-                    <h5 class="fw-bold mb-4 mt-4 text-primary"><i class="fas fa-link me-2"></i>Quick Links Management</h5>
-                    <p class="text-muted small mb-3">Define up to 5 custom links for your footer.</p>
+                    <h5 class="fw-bold mb-4 mt-5 text-primary"><i class="fas fa-link me-2"></i>Quick Links Management</h5>
+                    <p class="text-muted small mb-4">Define up to 5 custom links for your footer.</p>
                     <?php for($i=1; $i<=5; $i++): 
                         $link = $current['quick_links'][$i-1] ?? ['label' => '', 'url' => ''];
                     ?>
-                    <div class="row g-2 mb-3 align-items-end">
-                        <div class="col-md-5">
-                            <label class="form-label fw-bold small text-muted">LINK <?php echo $i; ?> LABEL</label>
-                            <input type="text" name="ql_label_<?php echo $i; ?>" class="form-control rounded-3" value="<?php echo htmlspecialchars($link['label']); ?>" placeholder="e.g. About Us">
-                        </div>
-                        <div class="col-md-7">
-                            <label class="form-label fw-bold small text-muted">LINK <?php echo $i; ?> URL</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"><i class="fas fa-link text-muted"></i></span>
-                                <input type="text" name="ql_url_<?php echo $i; ?>" class="form-control rounded-end-3" value="<?php echo htmlspecialchars($link['url']); ?>" placeholder="e.g. about.php">
+                    <div class="bg-light p-3 rounded-4 mb-3 border border-white">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-12 col-sm-5">
+                                <label class="form-label fw-bold extra-small text-muted">LINK <?php echo $i; ?> LABEL</label>
+                                <input type="text" name="ql_label_<?php echo $i; ?>" class="form-control" value="<?php echo htmlspecialchars($link['label']); ?>" placeholder="e.g. About Us">
+                            </div>
+                            <div class="col-12 col-sm-7">
+                                <label class="form-label fw-bold extra-small text-muted">LINK <?php echo $i; ?> URL</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted px-3"><i class="fas fa-link"></i></span>
+                                    <input type="text" name="ql_url_<?php echo $i; ?>" class="form-control rounded-end-3" value="<?php echo htmlspecialchars($link['url']); ?>" placeholder="e.g. about.php">
+                                </div>
                             </div>
                         </div>
                     </div>

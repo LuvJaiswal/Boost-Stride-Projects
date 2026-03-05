@@ -82,71 +82,98 @@
         /* Main Content Adjustments */
         .main-content { 
             margin-left: var(--sidebar-width);
-            padding: 2rem; 
+            padding: 2.5rem; 
             min-height: 100vh;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .top-navbar {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            margin-bottom: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 1.5rem;
+            z-index: 900;
         }
 
         /* Cards and Components */
         .card { 
             border: none; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
+            border-radius: 24px; 
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stat-icon {
-            width: 54px;
-            height: 54px;
+            width: 58px;
+            height: 58px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 14px;
+            border-radius: 18px;
+            font-size: 1.3rem;
+            flex-shrink: 0;
         }
 
-        /* Mobile specific */
+        /* Mobile specific enhancements */
         @media (max-width: 991.98px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0;
-            }
+            .sidebar { transform: translateX(-100%); width: 280px; }
+            .sidebar.show { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1rem; }
+            .top-navbar { border-radius: 0; margin: -1rem -1rem 1.5rem -1rem; top: 0; border-top: 0; border-left: 0; border-right: 0; padding: 1rem; }
         }
 
         .btn-gradient {
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 12px;
-            font-weight: 500;
+            padding: 0.9rem 2rem;
+            border-radius: 18px;
+            font-weight: 600;
             transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
         }
 
         .btn-gradient:hover {
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 25px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
             color: white;
         }
+
+        .btn-gradient:active { transform: translateY(0); }
+
+        .form-control, .form-select {
+            padding: 0.8rem 1.2rem;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            background: #fdfdfd;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: white;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+            outline: none;
+        }
+
+        /* Custom Scrollbar for Sleek Feel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
 <body>
@@ -185,6 +212,9 @@
         <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
             <i class="fas fa-shoe-prints"></i> Footer Section
         </a>
+        <a href="?page=menu" class="<?php echo ($page ?? '') === 'menu' ? 'active' : ''; ?>">
+            <i class="fas fa-bars"></i> Navigation Menu
+        </a>
         <hr>
         <a href="logout.php" class="text-danger">
             <i class="fas fa-sign-out-alt"></i> Logout
@@ -222,6 +252,9 @@
                 </a>
                 <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
                     <i class="fas fa-shoe-prints"></i> Footer Section
+                </a>
+                <a href="?page=menu" class="<?php echo ($page ?? '') === 'menu' ? 'active' : ''; ?>">
+                    <i class="fas fa-bars"></i> Navigation Menu
                 </a>
                 <hr>
                 <a href="logout.php" class="text-danger">
