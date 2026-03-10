@@ -70,6 +70,18 @@ class Database {
                 attempts INT DEFAULT 0,
                 last_attempt INT
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+            CREATE TABLE IF NOT EXISTS pages (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                slug VARCHAR(100) UNIQUE NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                content LONGTEXT,
+                meta_title VARCHAR(255),
+                meta_description TEXT,
+                status ENUM('draft', 'published') DEFAULT 'published',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         ";
         
         try {

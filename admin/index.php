@@ -8,6 +8,7 @@ require_once 'core/Database.php';
 require_once 'core/JWT.php';
 require_once 'core/Auth.php';
 require_once 'core/Middleware.php';
+require_once 'core/Uploader.php';
 
 use Core\Auth;
 use Core\Database;
@@ -44,6 +45,12 @@ switch($page) {
         break;
     case 'menu':
         include 'views/pages/menu.php';
+        break;
+    case 'pages':
+        include 'views/pages/pages_content.php';
+        break;
+    case 'custom_pages':
+        include 'views/pages/custom_pages.php';
         break;
     default:
         include 'views/pages/dashboard.php';

@@ -10,6 +10,7 @@ $db = Database::getInstance();
 // Stats Queries
 $service_count = $db->query("SELECT COUNT(*) FROM services")->fetchColumn();
 $testimonial_count = $db->query("SELECT COUNT(*) FROM testimonials")->fetchColumn();
+$pages_count = $db->query("SELECT COUNT(*) FROM pages")->fetchColumn();
 $recent_logs = $db->query("SELECT attempts, ip_address, last_attempt FROM login_attempts ORDER BY last_attempt DESC LIMIT 5")->fetchAll();
 
 // System Info
@@ -20,134 +21,120 @@ $mysql_version = $db->query("SELECT VERSION()")->fetchColumn();
 <div class="row g-4 mb-5">
     <!-- Stat Card 1 -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card p-4 h-100">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p class="text-muted small text-uppercase mb-1 fw-bold">Live Services</p>
-                    <h2 class="fw-bold mb-0"><?php echo $service_count; ?></h2>
-                </div>
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="fas fa-tools fa-lg"></i>
-                </div>
+        <div class="card border-0 p-4 h-100 position-relative overflow-hidden group">
+            <div class="position-absolute top-0 end-0 p-3 opacity-10 group-hover:opacity-20 transition-all">
+                <i class="fas fa-tools fa-4x text-primary"></i>
             </div>
-            <div class="mt-3">
-                <span class="text-success small fw-bold"><i class="fas fa-arrow-up"></i> Active</span>
-                <span class="text-muted small ms-1">ready for customers</span>
+            <p class="text-muted small text-uppercase mb-1 fw-bold letter-spacing-1">Live Services</p>
+            <h2 class="fw-bold mb-2 display-6"><?php echo $service_count; ?></h2>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-success bg-opacity-10 text-success rounded-pill extra-small px-2">
+                    <i class="fas fa-arrow-up me-1"></i> Active
+                </span>
+                <span class="text-muted extra-small">Ready for public view</span>
             </div>
         </div>
     </div>
     
     <!-- Stat Card 2 -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card p-4 h-100">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p class="text-muted small text-uppercase mb-1 fw-bold">Customer Feed</p>
-                    <h2 class="fw-bold mb-0"><?php echo $testimonial_count; ?></h2>
-                </div>
-                <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="fas fa-quote-right fa-lg"></i>
-                </div>
+        <div class="card border-0 p-4 h-100 position-relative overflow-hidden group">
+            <div class="position-absolute top-0 end-0 p-3 opacity-10 group-hover:opacity-20 transition-all">
+                <i class="fas fa-file-invoice fa-4x text-purple"></i>
             </div>
-            <div class="mt-3">
-                <span class="text-success small fw-bold"><i class="fas fa-check-circle"></i> Social Proof</span>
-                <span class="text-muted small ms-1">publicly visible</span>
+            <p class="text-muted small text-uppercase mb-1 fw-bold letter-spacing-1">Total Pages</p>
+            <h2 class="fw-bold mb-2 display-6"><?php echo $pages_count; ?></h2>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-purple bg-opacity-10 text-purple rounded-pill extra-small px-2">
+                    <i class="fas fa-link me-1"></i> Connected
+                </span>
+                <span class="text-muted extra-small">Site architecture assets</span>
             </div>
         </div>
     </div>
 
     <!-- Stat Card 3 -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card p-4 h-100 border-start border-4 border-warning">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p class="text-muted small text-uppercase mb-1 fw-bold">System Status</p>
-                    <h2 class="fw-bold mb-0 text-warning">Stable</h2>
-                </div>
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="fas fa-shield-alt fa-lg"></i>
-                </div>
+        <div class="card border-0 p-4 h-100 position-relative overflow-hidden group">
+            <div class="position-absolute top-0 end-0 p-3 opacity-10 group-hover:opacity-20 transition-all">
+                <i class="fas fa-star fa-4x text-warning"></i>
             </div>
-            <div class="mt-3">
-                <span class="text-warning small fw-bold">PHP <?php echo $php_version; ?></span>
+            <p class="text-muted small text-uppercase mb-1 fw-bold letter-spacing-1">Social Proof</p>
+            <h2 class="fw-bold mb-2 display-6"><?php echo $testimonial_count; ?></h2>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill extra-small px-2">
+                    <i class="fas fa-check me-1"></i> Verified
+                </span>
+                <span class="text-muted extra-small">Customer testimonials</span>
             </div>
         </div>
     </div>
 
     <!-- Stat Card 4 -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card p-4 h-100 border-start border-4 border-info">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <p class="text-muted small text-uppercase mb-1 fw-bold">DB Version</p>
-                    <h2 class="fw-bold mb-0 text-info">MySQL</h2>
-                </div>
-                <div class="stat-icon bg-info bg-opacity-10 text-info">
-                    <i class="fas fa-database fa-lg"></i>
-                </div>
-            </div>
-            <div class="mt-3 text-truncate">
-                <span class="text-info small fw-bold"><?php echo substr($mysql_version, 0, 15); ?>...</span>
+        <div class="card border-0 p-4 h-100 position-relative overflow-hidden group bg-dark text-white shadow-dark">
+            <p class="text-light text-opacity-50 small text-uppercase mb-1 fw-bold letter-spacing-1">Engine Version</p>
+            <h2 class="fw-bold mb-2 display-6 text-white">PHP <?php echo explode('.', $php_version)[0] . '.' . explode('.', $php_version)[1]; ?></h2>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary rounded-pill extra-small px-2">
+                    <i class="fas fa-shield-check me-1"></i> Secure
+                </span>
+                <span class="text-light text-opacity-50 extra-small">Optimized for cPanel</span>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- Quick Actions -->
+    <!-- Quick Management -->
     <div class="col-12 col-lg-8">
-        <div class="card p-4 h-100 shadow-lg border-0">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="fw-bold mb-0">Management Portal</h5>
-                <span class="badge bg-light text-primary py-2 px-3 rounded-pill border border-primary border-opacity-25">Quick Access</span>
+        <div class="card p-4 h-100 border-0 shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h5 class="fw-bold mb-1">Management Portal</h5>
+                    <p class="text-muted small mb-0">Direct access to core website modules.</p>
+                </div>
+                <button class="btn btn-light rounded-circle p-2" title="Refresh Links"><i class="fas fa-sync-alt fa-sm"></i></button>
             </div>
             <div class="row g-4">
                 <div class="col-12 col-md-6">
-                    <div class="p-3 border rounded-4 hover-bg-light transition-all">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                                <i class="fas fa-tv"></i>
-                            </div>
-                            <h6 class="mb-0 fw-bold">Hero Experience</h6>
+                    <div class="p-4 border rounded-4 hover-shadow transition-all bg-light bg-opacity-50 border-white h-100">
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary mb-3">
+                            <i class="fas fa-window-restore"></i>
                         </div>
-                        <p class="text-muted small">Update your landing page's first impression, titles and descriptions.</p>
-                        <a href="?page=hero" class="btn btn-sm btn-outline-primary w-100 rounded-pill">Manage Hero</a>
+                        <h6 class="fw-bold">Hero Experience</h6>
+                        <p class="text-muted extra-small mb-4">Update titles, subtitles and main call-to-action sections on your landing page.</p>
+                        <a href="?page=hero" class="btn btn-white border shadow-sm w-100 rounded-pill btn-sm fw-bold">Open Editor</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <div class="p-3 border rounded-4 hover-bg-light transition-all">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="stat-icon bg-success bg-opacity-10 text-success">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <h6 class="mb-0 fw-bold">Service Catalog</h6>
+                    <div class="p-4 border rounded-4 hover-shadow transition-all bg-light bg-opacity-50 border-white h-100">
+                        <div class="stat-icon bg-success bg-opacity-10 text-success mb-3">
+                            <i class="fas fa-tools"></i>
                         </div>
-                        <p class="text-muted small">Add, remove or edit the automotive services you offer to clients.</p>
-                        <a href="?page=services" class="btn btn-sm btn-outline-success w-100 rounded-pill">Manage Services</a>
+                        <h6 class="fw-bold">Service Pipeline</h6>
+                        <p class="text-muted extra-small mb-4">Manage the full catalog of automotive services and maintenance options.</p>
+                        <a href="?page=services" class="btn btn-white border shadow-sm w-100 rounded-pill btn-sm fw-bold">Manage Catalog</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <div class="p-3 border rounded-4 hover-bg-light transition-all">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="stat-icon bg-info bg-opacity-10 text-info">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <h6 class="mb-0 fw-bold">SEO Optimizer</h6>
+                    <div class="p-4 border rounded-4 hover-shadow transition-all bg-light bg-opacity-50 border-white h-100">
+                        <div class="stat-icon bg-info bg-opacity-10 text-info mb-3">
+                            <i class="fas fa-search-plus"></i>
                         </div>
-                        <p class="text-muted small">Configure meta tags and descriptions for better search rankings.</p>
-                        <a href="?page=seo" class="btn btn-sm btn-outline-info w-100 rounded-pill">Manage SEO</a>
+                        <h6 class="fw-bold">SEO Optimizer</h6>
+                        <p class="text-muted extra-small mb-4">Configure search engine meta tags and site-wide descriptions for better reach.</p>
+                        <a href="?page=seo" class="btn btn-white border shadow-sm w-100 rounded-pill btn-sm fw-bold">Configure Tags</a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <div class="p-3 border rounded-4 hover-bg-light transition-all">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="stat-icon bg-secondary bg-opacity-10 text-secondary">
-                                <i class="fas fa-cogs"></i>
-                            </div>
-                            <h6 class="mb-0 fw-bold">Core Settings</h6>
+                    <div class="p-4 border rounded-4 hover-shadow transition-all bg-light bg-opacity-50 border-white h-100">
+                        <div class="stat-icon bg-dark bg-opacity-10 text-dark mb-3">
+                            <i class="fas fa-sitemap"></i>
                         </div>
-                        <p class="text-muted small">Adjust site name, contact info, and other fundamental settings.</p>
-                        <a href="?page=settings" class="btn btn-sm btn-outline-secondary w-100 rounded-pill">System Config</a>
+                        <h6 class="fw-bold">Global Navigation</h6>
+                        <p class="text-muted extra-small mb-4">Adjust the multi-level menu and footer quick-links for better navigation flow.</p>
+                        <a href="?page=menu" class="btn btn-white border shadow-sm w-100 rounded-pill btn-sm fw-bold">Edit Hierarchy</a>
                     </div>
                 </div>
             </div>
@@ -156,55 +143,56 @@ $mysql_version = $db->query("SELECT VERSION()")->fetchColumn();
 
     <!-- Security Monitor -->
     <div class="col-12 col-lg-4">
-        <div class="card p-4 h-100 shadow-lg border-0 bg-dark text-white overflow-hidden position-relative">
-            <!-- Decorative circle -->
-            <div class="position-absolute translate-middle" style="width: 200px; height: 200px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; top: 0; right: -50px;"></div>
-            
-            <h5 class="fw-bold mb-4 position-relative z-1">Security Sentinel</h5>
-            
-            <div class="mb-4 position-relative z-1">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="small text-light text-opacity-75">Rate Limiting Status</span>
-                    <span class="badge bg-success">Active</span>
-                </div>
-                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
-                    <div class="progress-bar bg-primary" style="width: 100%"></div>
-                </div>
+        <div class="card p-0 border-0 h-100 bg-dark text-white shadow-dark overflow-hidden">
+            <div class="p-4 bg-primary bg-opacity-10 border-bottom border-white border-opacity-10">
+                <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                    <i class="fas fa-shield-check text-primary"></i> Security Sentinel
+                </h5>
             </div>
+            
+            <div class="p-4">
+                <div class="mb-5">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="small text-light text-opacity-75">JWT Session Security</span>
+                        <span class="badge bg-success badge-premium">Active</span>
+                    </div>
+                    <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                        <div class="progress-bar bg-primary" style="width: 100%"></div>
+                    </div>
+                </div>
 
-            <div class="position-relative z-1">
-                <p class="small text-light text-opacity-50 mb-3 text-uppercase fw-bold">Recent Login Failures</p>
-                <div class="list-group list-group-flush bg-transparent">
+                <p class="extra-small text-uppercase fw-bold text-light text-opacity-50 mb-3 letter-spacing-1">Recent Login Attempts</p>
+                <div class="list-group list-group-flush">
                     <?php if (empty($recent_logs)): ?>
-                        <div class="text-light text-opacity-50 small py-5 text-center">
-                            <i class="fas fa-check-circle fa-3x d-block mb-3 opacity-25"></i>
-                            All systems secure.
+                        <div class="text-center py-5 opacity-50">
+                            <i class="fas fa-check-circle fa-2x mb-3 text-success"></i>
+                            <p class="small mb-0">No unauthorized attempts detected.</p>
                         </div>
                     <?php else: ?>
                         <?php foreach ($recent_logs as $log): ?>
-                            <div class="list-group-item bg-transparent border-light border-opacity-10 px-0 py-3">
+                            <div class="list-group-item bg-transparent border-white border-opacity-10 px-0 py-3">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <div class="fw-bold small text-white"><?php echo $log['ip_address']; ?></div>
-                                        <div class="text-light text-opacity-50" style="font-size: 0.7rem;">
+                                        <div class="fw-bold small"><?php echo $log['ip_address']; ?></div>
+                                        <div class="text-light text-opacity-40 extra-small">
                                             <?php echo date('M d, H:i', $log['last_attempt']); ?>
                                         </div>
                                     </div>
-                                    <span class="badge bg-danger rounded-pill"><?php echo $log['attempts']; ?></span>
+                                    <span class="badge bg-danger rounded-pill px-2 py-1"><?php echo $log['attempts']; ?></span>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
-            </div>
 
-            <div class="mt-auto pt-4 position-relative z-1">
-                <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-white border-opacity-10">
-                    <div class="d-flex align-items-center gap-2 mb-1">
-                        <i class="fas fa-lock text-primary"></i>
-                        <span class="small fw-bold">Encryption Active</span>
+                <div class="mt-5 p-3 rounded-4 border border-white border-opacity-10 bg-white bg-opacity-5">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fas fa-database text-warning"></i>
+                        <div>
+                            <div class="extra-small text-light text-opacity-40 fw-bold">DATABASE CONNECTED</div>
+                            <div class="small fw-bold">MySQL <?php echo substr($mysql_version, 0, 7); ?></div>
+                        </div>
                     </div>
-                    <p class="mb-0" style="font-size: 0.75rem; color: rgba(255,255,255,0.6);">All admin sessions are protected with JWT & Secure HttpOnly cookies.</p>
                 </div>
             </div>
         </div>
@@ -212,6 +200,10 @@ $mysql_version = $db->query("SELECT VERSION()")->fetchColumn();
 </div>
 
 <style>
-    .transition-all { transition: all 0.3s ease; }
-    .hover-bg-light:hover { background-color: #f8fafc; border-color: #6366f1 !important; transform: scale(1.02); }
+    .text-purple { color: #7c3aed; }
+    .bg-purple { background-color: #7c3aed; }
+    .shadow-dark { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3) !important; }
+    .hover-shadow:hover { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); transform: translateY(-5px); }
+    .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .letter-spacing-1 { letter-spacing: 0.5px; }
 </style>

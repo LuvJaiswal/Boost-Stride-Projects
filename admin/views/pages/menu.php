@@ -110,9 +110,26 @@ $current = array_merge($defaults, $current);
                             <label class="form-label fw-bold small text-muted">CTA BUTTON TEXT</label>
                             <input type="text" name="cta_text" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['cta_text']); ?>">
                         </div>
-                        <div class="mb-0">
+                        <div class="mb-4">
                             <label class="form-label fw-bold small text-muted">CTA BUTTON URL</label>
                             <input type="text" name="cta_url" class="form-control rounded-3" value="<?php echo htmlspecialchars($current['cta_url']); ?>">
+                        </div>
+
+                        <!-- Quick-Link Guide -->
+                        <div class="mt-2 pt-3 border-top">
+                            <label class="form-label fw-bold extra-small text-muted mb-3"><i class="fas fa-link me-1"></i>YOUR CUSTOM PAGES SLUGS</label>
+                            <?php 
+                                $custom_pages = $db->query("SELECT title, slug FROM pages WHERE status='published'")->fetchAll();
+                                if(empty($custom_pages)):
+                            ?>
+                                <p class="text-muted small italic">No custom pages published yet.</p>
+                            <?php else: foreach($custom_pages as $cp): ?>
+                                <div class="d-flex justify-content-between align-items-center mb-2 bg-light p-2 rounded-3 border-start border-3 border-warning">
+                                    <span class="small fw-bold"><?php echo htmlspecialchars($cp['title']); ?></span>
+                                    <code class="extra-small text-primary">page.php?slug=<?php echo htmlspecialchars($cp['slug']); ?></code>
+                                </div>
+                            <?php endforeach; endif; ?>
+                            <div class="form-text mt-3">Copy-paste the code above into the <strong>Destination URL</strong> field to link to your custom pages.</div>
                         </div>
                     </div>
                 </div>
@@ -145,13 +162,12 @@ $current = array_merge($defaults, $current);
                                             <option value="dropdown" <?php echo $item['type'] === 'dropdown' ? 'selected' : ''; ?>>Dropdown</option>
                                         </select>
                                     </div>
-                                    <div class="col-6 col-md-3 url-container <?php echo $item['type'] === 'dropdown' ? 'd-none' : ''; ?>">
+                                    <div class="col-6 col-md-3 url-container">
                                         <label class="form-label fw-bold extra-small text-muted mb-1">DESTINATION URL</label>
-                                        <input type="text" name="urls[]" class="form-control" value="<?php echo htmlspecialchars($item['url']); ?>" placeholder="index.php">
+                                        <input type="text" name="urls[]" class="form-control url-input" value="<?php echo htmlspecialchars($item['url']); ?>" placeholder="index.php" <?php echo $item['type'] === 'dropdown' ? 'readonly style="background: #e9ecef;"' : ''; ?>>
                                     </div>
                                     <div class="col-12 col-md-2 d-flex align-items-end">
-                                        <button type="button" class="btn btn-white text-danger border shadow-sm rounded-3 remove-parent w-100 py-2"><i class="fas fa-trash me-2 d-md-none"></i>Delete</button>
-                                        <input type="hidden" name="urls[]" class="dropdown-hidden-url <?php echo $item['type'] !== 'dropdown' ? 'd-none' : ''; ?>" value="#">
+                                        <button type="button" class="btn btn-white text-danger border shadow-sm rounded-3 remove-parent w-100 py-2">Delete</button>
                                     </div>
                                 </div>
 
@@ -225,11 +241,10 @@ document.getElementById('add-main-item').addEventListener('click', function() {
             </div>
             <div class="col-6 col-md-3 url-container">
                 <label class="form-label fw-bold extra-small text-muted mb-1">DESTINATION URL</label>
-                <input type="text" name="urls[]" class="form-control" placeholder="page.php">
+                <input type="text" name="urls[]" class="form-control url-input" placeholder="page.php">
             </div>
             <div class="col-12 col-md-2 d-flex align-items-end">
-                <button type="button" class="btn btn-white text-danger border shadow-sm rounded-3 remove-parent w-100 py-2"><i class="fas fa-trash me-2 d-md-none"></i>Delete</button>
-                <input type="hidden" name="urls[]" class="dropdown-hidden-url d-none" value="#">
+                <button type="button" class="btn btn-white text-danger border shadow-sm rounded-3 remove-parent w-100 py-2">Delete</button>
             </div>
         </div>
         <div class="submenu-container mt-4 pt-3 border-top d-none">
@@ -246,20 +261,21 @@ document.getElementById('add-main-item').addEventListener('click', function() {
 
 function attachEvents(parent) {
     const typeSelect = parent.querySelector('.type-selector');
-    const urlContainer = parent.querySelector('.url-container');
-    const hiddenUrl = parent.querySelector('.dropdown-hidden-url');
+    const urlInput = parent.querySelector('.url-input');
     const submenu = parent.querySelector('.submenu-container');
     const addSubBtn = parent.querySelector('.add-sub-item');
     const subList = parent.querySelector('.sub-items-list');
 
     typeSelect.addEventListener('change', function() {
         if (this.value === 'dropdown') {
-            urlContainer.classList.add('d-none');
-            hiddenUrl.classList.remove('d-none');
+            urlInput.value = '#';
+            urlInput.readOnly = true;
+            urlInput.style.background = '#e9ecef';
             submenu.classList.remove('d-none');
         } else {
-            urlContainer.classList.remove('d-none');
-            hiddenUrl.classList.add('d-none');
+            if (urlInput.value === '#') urlInput.value = '';
+            urlInput.readOnly = false;
+            urlInput.style.background = '';
             submenu.classList.add('d-none');
         }
     });

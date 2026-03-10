@@ -16,11 +16,15 @@ header('Content-Type: application/json');
 
 try {
     $db = Database::getInstance();
+    if (!$db) {
+        throw new Exception("Database connection failed. Please check your DB settings in Config.php.");
+    }
     
-    /**
-     * Data Retrieval Strategy:
-     * We pull all site state in one fast MySQL query where possible.
-     */
+    // Verify table existence
+    $checkTable = $db->query("SHOW TABLES LIKE 'services'")->rowCount();
+    if ($checkTable == 0) {
+        throw new Exception("The 'services' table does not exist. Please run the database setup.");
+    }
 
     // 1. Fetch Global Settings
     $stmt = $db->query("SELECT setting_key, setting_value FROM settings");
@@ -43,13 +47,32 @@ try {
             "contact" => json_decode($settingsRaw['contact_info'] ?? '{"phone": "+012 345 6789", "email": "info@example.com"}'),
             "seo" => json_decode($settingsRaw['seo_data'] ?? '{"title": "Boost Stride"}'),
             "footer" => json_decode($settingsRaw['footer_data'] ?? '{}'),
-            "menu" => json_decode($settingsRaw['menu_data'] ?? '{}'),
+            "menu" => json_decode($settingsRaw['menu_data'] ?? json_encode([
+                "brand_name" => "Boost Stride",
+                "cta_text" => "Get A Quote",
+                "cta_url" => "quote.php",
+                "main_menu" => [
+                    ["label" => "Home", "url" => "index.php", "type" => "link"],
+                    ["label" => "About", "url" => "about.php", "type" => "link"],
+                    ["label" => "Service", "url" => "service.php", "type" => "link"],
+                    ["label" => "Pages", "url" => "#", "type" => "dropdown", "children" => [
+                        ["label" => "Feature", "url" => "feature.php"],
+                        ["label" => "Free Quote", "url" => "quote.php"],
+                        ["label" => "Our Team", "url" => "team.php"],
+                        ["label" => "Testimonial", "url" => "testimonial.php"]
+                    ]],
+                    ["label" => "Contact", "url" => "contact.php", "type" => "link"]
+                ]
+            ])),
+            "about" => json_decode($settingsRaw['about_data'] ?? '{}'),
+            "features" => json_decode($settingsRaw['features_data'] ?? '[]'),
+            "team" => json_decode($settingsRaw['team_data'] ?? '[]'),
             "services" => $services,
             "testimonials" => $testimonials
         ]
     ];
 
-    echo json_encode($response);
+    echo json_encode($response, JSON_INVALID_UTF8_SUBSTITUTE | JSON_PARTIAL_OUTPUT_ON_ERROR);
 
 } catch (Exception $e) {
     error_log("API Error: " . $e->getMessage());

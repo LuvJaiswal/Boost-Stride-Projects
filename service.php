@@ -1,5 +1,11 @@
-<?php include 'includes/header.php'; ?>
-<?php include 'includes/navbar.php'; ?>
+<?php 
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    header("Location: service-details.php?id=" . (int)$_GET['id']);
+    exit;
+}
+include 'includes/header.php'; 
+include 'includes/navbar.php'; 
+?>
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5">
@@ -20,14 +26,15 @@
     <!-- Service Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="section-title text-center">
-                <h1 class="display-5 mb-5">Our Services</h1>
+            <div class="section-title text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="display-5 mb-5">Our Professional Services</h1>
+                <p class="text-muted">We provide high-quality automotive maintenance and repair services to keep your vehicle running smoothly.</p>
             </div>
-            <div id="services-container" class="row g-4">
+            <div id="services-container" class="row g-4 justify-content-center">
                 <!-- Data will be dynamically injected here by Boost Stride Framework -->
                 <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading Services...</span>
                     </div>
                 </div>
             </div>

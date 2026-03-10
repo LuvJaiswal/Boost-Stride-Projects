@@ -16,6 +16,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <a href="about.php" class="nav-item nav-link">About</a>
                 <a href="service.php" class="nav-item nav-link">Service</a>
                 <a href="project.php" class="nav-item nav-link">Project</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-up m-0">
+                        <a href="feature.php" class="dropdown-item">Feature</a>
+                        <a href="quote.php" class="dropdown-item">Free Quote</a>
+                        <a href="team.php" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.php" class="dropdown-item">Testimonial</a>
+                        <a href="404.php" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
                 <a href="contact.php" class="nav-item nav-link">Contact</a>
             </div>
             <a id="nav-cta-button" href="quote.php" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Get A Quote<i

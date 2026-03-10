@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "title": "General Auto Repair",
+        "description": "Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.",
+        "image": "img\/service-1.jpg",
+        "sort_order": 1
+    },
+    {
+        "id": 2,
+        "title": "Brake Services",
+        "description": "Precision braking system maintenance and repair for your safety.",
+        "image": "img\/service-2.jpg",
+        "sort_order": 2
+    },
+    {
+        "id": 3,
+        "title": "Tire Replacement",
+        "description": "High-quality tire brands and professional installation services.",
+        "image": "img\/service-3.jpg",
+        "sort_order": 3
+    },
+    {
+        "id": 4,
+        "title": "good copper",
+        "description": "best for use and update",
+        "image": "img\/service-1.jpg",
+        "sort_order": 4
+    }
+]

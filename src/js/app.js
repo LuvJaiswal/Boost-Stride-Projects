@@ -36,6 +36,9 @@ class ContentLoader {
         // 2. Collection Elements
         this.renderServices();
         this.renderTestimonials();
+        this.renderAbout();
+        this.renderFeatures();
+        this.renderTeam();
 
         // 3. Re-initialize Plugins
         this.reinitializePlugins();
@@ -45,6 +48,14 @@ class ContentLoader {
         // Re-init WOW animations
         if (typeof WOW !== 'undefined') {
             new WOW().init();
+        }
+
+        // Re-init Facts counter
+        if (window.jQuery && jQuery().counterUp) {
+            jQuery('[data-toggle="counter-up"]').counterUp({
+                delay: 10,
+                time: 2000
+            });
         }
 
         // Re-init Owl Carousel for testimonials
@@ -98,8 +109,16 @@ class ContentLoader {
         };
 
         Object.entries(mapping).forEach(([id, value]) => {
-            const el = document.getElementById(id);
-            if (el && value) el.textContent = value;
+            if (!value) return;
+            // Handle possibility of multiple elements (e.g. multiple hero slides)
+            const elements = document.querySelectorAll(`#${id}, [data-id="${id}"]`);
+            elements.forEach(el => {
+                if (id.includes('desc') || id.includes('text')) {
+                    el.innerHTML = value.replace(/\n/g, '<br>');
+                } else {
+                    el.textContent = value;
+                }
+            });
         });
 
         // 1.2 Attributes & Links
@@ -131,7 +150,7 @@ class ContentLoader {
         const qlContainer = document.getElementById("footer-quick-links-container");
         if (qlContainer && this.data.footer?.quick_links) {
             qlContainer.innerHTML = this.data.footer.quick_links
-                .filter(link => link.label.trim() !== "")
+                .filter(link => link.label && link.label.trim() !== "")
                 .map(link => `<a class="btn btn-link" href="${link.url}">${link.label}</a>`)
                 .join('');
         }
@@ -176,7 +195,12 @@ class ContentLoader {
         const container = document.getElementById("services-container");
         const footerContainer = document.getElementById("footer-services-container");
 
-        if ((!container && !footerContainer) || !this.data.services || this.data.services.length === 0) return;
+        if (!container && !footerContainer) return;
+
+        if (!this.data.services || this.data.services.length === 0) {
+            if (container) container.innerHTML = '<div class="col-12 text-center py-5"><h5 class="text-muted">No services found. Visit Admin to add some.</h5></div>';
+            return;
+        }
 
         const servicesHtml = this.data.services.map(service => `
             <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
@@ -187,7 +211,7 @@ class ContentLoader {
                     <div class="p-4 text-center border border-5 border-light border-top-0">
                         <h4 class="mb-3">${service.title}</h4>
                         <p>${service.description}</p>
-                        <a class="fw-medium" href="#">Read More<i class="fa fa-arrow-right ms-2"></i></a>
+                        <a class="fw-medium" href="service-details.php?id=${service.id}">Read More<i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
@@ -197,7 +221,7 @@ class ContentLoader {
 
         if (footerContainer) {
             footerContainer.innerHTML = this.data.services.slice(0, 5).map(service => `
-                <a class="btn btn-link" href="service.php">${service.title}</a>
+                <a class="btn btn-link" href="service-details.php?id=${service.id}">${service.title}</a>
             `).join('');
         }
     }
@@ -213,6 +237,67 @@ class ContentLoader {
                     <p>${t.text}</p>
                     <h5 class="mb-1">${t.name}</h5>
                     <span class="fst-italic">${t.profession}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    renderAbout() {
+        const titleElements = document.querySelectorAll("#about-title");
+        const descElements = document.querySelectorAll("#about-desc");
+        const clientsElements = document.querySelectorAll("#about-clients, #about-clients-count");
+        const repairsElements = document.querySelectorAll("#about-repairs, #about-repairs-count");
+
+        titleElements.forEach(el => {
+            if (this.data.about?.title) el.textContent = this.data.about.title;
+        });
+        descElements.forEach(el => {
+            if (this.data.about?.description) el.innerHTML = this.data.about.description.replace(/\n/g, '<br>');
+        });
+        clientsElements.forEach(el => {
+            if (this.data.about?.clients) el.textContent = this.data.about.clients;
+        });
+        repairsElements.forEach(el => {
+            if (this.data.about?.repairs) el.textContent = this.data.about.repairs;
+        });
+    }
+
+    renderFeatures() {
+        const container = document.getElementById("features-container");
+        if (!container || !this.data.features || this.data.features.length === 0) return;
+
+        container.innerHTML = this.data.features.map((f, i) => `
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="${0.1 + (i * 0.2)}s">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="width: 60px; height: 60px;">
+                        <i class="fa ${f.icon} fa-2x text-primary"></i>
+                    </div>
+                    <h1 class="display-1 text-light mb-0">0${i + 1}</h1>
+                </div>
+                <h5>${f.title}</h5>
+            </div>
+        `).join('');
+    }
+
+    renderTeam() {
+        const container = document.getElementById("team-container");
+        if (!container || !this.data.team || this.data.team.length === 0) return;
+
+        container.innerHTML = this.data.team.map((m, i) => `
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="${0.1 + (i % 4 * 0.2)}s">
+                <div class="team-item">
+                    <div class="overflow-hidden position-relative">
+                        <img class="img-fluid" src="img/${m.image || 'team-1.jpg'}" alt="${m.name}">
+                        <div class="team-social">
+                            <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center border border-5 border-light border-top-0 p-4">
+                        <h5 class="mb-0">${m.name}</h5>
+                        <small>${m.role}</small>
+                    </div>
                 </div>
             </div>
         `).join('');
