@@ -273,6 +273,9 @@
         <a href="?page=testimonials" class="<?php echo ($page ?? '') === 'testimonials' ? 'active' : ''; ?>">
             <i class="fas fa-comment-dots"></i> Client Reviews
         </a>
+        <a href="?page=team" class="<?php echo ($page ?? '') === 'team' ? 'active' : ''; ?>">
+            <i class="fas fa-users"></i> Staff & Team
+        </a>
         <a href="?page=pages" class="<?php echo ($page ?? '') === 'pages' ? 'active' : ''; ?>">
             <i class="fas fa-file-invoice"></i> Dynamic Sections
         </a>
@@ -393,6 +396,7 @@
                             'hero' => 'Visual Identity',
                             'services' => 'Service Pipeline',
                             'testimonials' => 'Social Reputation',
+                            'team' => 'Expert Collective',
                             'settings' => 'System Infrastructure',
                             'seo' => 'Growth & Reach',
                             'footer' => 'Brand Conclusion',

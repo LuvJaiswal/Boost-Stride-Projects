@@ -27,6 +27,16 @@ class ContentLoader {
         }
     }
 
+    getImagePath(path, fallback = 'img/team-1.jpg') {
+        if (!path) return fallback;
+        // Absolute URL — use as-is
+        if (path.startsWith('http://') || path.startsWith('https://')) return path;
+        // Uploaded file stored as 'uploads/filename.jpg' — lives inside /admin/
+        if (path.startsWith('uploads/')) return 'admin/' + path;
+        // Template default images like 'img/service-1.jpg' — at website root
+        return path;
+    }
+
     render() {
         if (!this.data) return;
 
@@ -206,7 +216,7 @@ class ContentLoader {
             <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="service-item">
                     <div class="overflow-hidden">
-                        <img class="img-fluid" src="${service.image || 'img/service-1.jpg'}" alt="${service.title}">
+                        <img class="img-fluid" src="${this.getImagePath(service.image, 'img/service-1.jpg')}" alt="${service.title}">
                     </div>
                     <div class="p-4 text-center border border-5 border-light border-top-0">
                         <h4 class="mb-3">${service.title}</h4>
@@ -232,7 +242,7 @@ class ContentLoader {
 
         container.innerHTML = this.data.testimonials.map(t => `
             <div class="testimonial-item text-center">
-                <img class="img-fluid bg-light p-2 mx-auto mb-3" src="${t.image || 'img/testimonial-1.jpg'}" style="width: 90px; height: 90px;">
+                <img class="img-fluid bg-light p-2 mx-auto mb-3" src="${this.getImagePath(t.image, 'img/testimonial-1.jpg')}" style="width: 90px; height: 90px;">
                 <div class="testimonial-text text-center p-4">
                     <p>${t.text}</p>
                     <h5 class="mb-1">${t.name}</h5>
@@ -281,26 +291,37 @@ class ContentLoader {
 
     renderTeam() {
         const container = document.getElementById("team-container");
-        if (!container || !this.data.team || this.data.team.length === 0) return;
+        if (!container || !this.data.team || this.data.team.length === 0) {
+            if (container) container.innerHTML = '<div class="col-12 text-center py-5 text-muted">No team members to display.</div>';
+            return;
+        }
 
-        container.innerHTML = this.data.team.map((m, i) => `
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="${0.1 + (i % 4 * 0.2)}s">
-                <div class="team-item">
-                    <div class="overflow-hidden position-relative">
-                        <img class="img-fluid" src="img/${m.image || 'team-1.jpg'}" alt="${m.name}">
-                        <div class="team-social">
-                            <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+        console.log("Boost Stride: Rendering Team", this.data.team);
+
+        container.innerHTML = this.data.team.map((m, i) => {
+            const imagePath = this.getImagePath(m.image, 'img/team-1.jpg');
+            // Handle long designations by truncating or adjusting font size if needed
+            const designation = m.designation || m.role || 'Expert';
+            
+            return `
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="${0.1 + (i % 4 * 0.2)}s">
+                    <div class="team-item h-100 shadow-sm border-0">
+                        <div class="overflow-hidden position-relative">
+                            <img class="img-fluid w-100" src="${imagePath}" alt="${m.name}" style="height:350px; object-fit:cover;">
+                            <div class="team-social">
+                                ${m.facebook_url ? `<a class="btn btn-square" href="${m.facebook_url}" target="_blank"><i class="fab fa-facebook-f"></i></a>` : ''}
+                                ${m.twitter_url ? `<a class="btn btn-square" href="${m.twitter_url}" target="_blank"><i class="fab fa-twitter"></i></a>` : ''}
+                                ${m.instagram_url ? `<a class="btn btn-square" href="${m.instagram_url}" target="_blank"><i class="fab fa-instagram"></i></a>` : ''}
+                            </div>
+                        </div>
+                        <div class="text-center border border-5 border-light border-top-0 p-4 bg-white">
+                            <h5 class="mb-1 fw-bold text-dark">${m.name}</h5>
+                            <small class="text-primary text-uppercase fw-bold letter-spacing-1" style="font-size: 0.75rem;">${designation}</small>
                         </div>
                     </div>
-                    <div class="text-center border border-5 border-light border-top-0 p-4">
-                        <h5 class="mb-0">${m.name}</h5>
-                        <small>${m.role}</small>
-                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 }
 

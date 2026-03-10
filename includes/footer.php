@@ -78,7 +78,7 @@
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
     <!-- Framework Logic -->
-    <script src="src/js/app.js?v=1.0.1"></script>
+    <script src="src/js/app.js?v=1.0.3"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>

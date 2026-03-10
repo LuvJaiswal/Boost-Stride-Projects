@@ -143,7 +143,11 @@ $services = $db->query("SELECT * FROM services ORDER BY sort_order ASC, id DESC"
                             <td class="ps-4 py-3">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="position-relative">
-                                        <img src="../<?php echo $s['image']; ?>" class="rounded-3 shadow-sm" style="width: 65px; height: 60px; object-fit: cover; border: 2px solid white;">
+                                        <?php 
+                                            $sImg = $s['image'] ?: 'img/service-1.jpg';
+                                            $sDisplayUrl = (strpos($sImg, 'uploads/') === 0) ? $sImg : '../' . $sImg;
+                                        ?>
+                                        <img src="<?php echo $sDisplayUrl; ?>" class="rounded-3 shadow-sm" style="width: 65px; height: 60px; object-fit: cover; border: 2px solid white;">
                                         <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-white text-dark border extra-small shadow-sm">ID:<?php echo $s['id']; ?></span>
                                     </div>
                                     <div>
@@ -223,7 +227,11 @@ $services = $db->query("SELECT * FROM services ORDER BY sort_order ASC, id DESC"
                                 <label class="form-label fw-bold small text-muted text-uppercase">Service Visual (Image)</label>
                                 <div id="preview-container" class="mb-3 text-center p-3 rounded-4 bg-white border border-dashed border-2 text-muted" style="min-height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                                     <?php if ($edit_service && $edit_service['image']): ?>
-                                        <img src="../<?php echo $edit_service['image']; ?>" class="img-fluid rounded-3 shadow mb-3" id="preview-img">
+                                        <?php 
+                                            $eImg = $edit_service['image'];
+                                            $eDisplayUrl = (strpos($eImg, 'uploads/') === 0) ? $eImg : '../' . $eImg;
+                                        ?>
+                                        <img src="<?php echo $eDisplayUrl; ?>" class="img-fluid rounded-3 shadow mb-3" id="preview-img">
                                         <p class="small mb-0 opacity-50 fst-italic">Currently Uploaded</p>
                                     <?php else: ?>
                                         <i class="fas fa-image fa-3x mb-3 opacity-25"></i>

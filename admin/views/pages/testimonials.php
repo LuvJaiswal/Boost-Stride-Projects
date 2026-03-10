@@ -104,7 +104,11 @@ $testimonials = $db->query("SELECT * FROM testimonials ORDER BY id DESC")->fetch
 
                         <div class="text-center mb-4">
                             <div class="position-relative d-inline-block">
-                                <img src="../<?php echo $edit_item['image'] ?? 'img/testimonial-1.jpg'; ?>" 
+                                <?php 
+                                    $imgUrl = $edit_item['image'] ?? 'img/testimonial-1.jpg';
+                                    $displayUrl = (strpos($imgUrl, 'uploads/') === 0) ? $imgUrl : '../' . $imgUrl;
+                                ?>
+                                <img src="<?php echo $displayUrl; ?>" 
                                      id="preview-avatar" 
                                      class="rounded-circle shadow-sm border border-4 border-white" 
                                      style="width: 120px; height: 120px; object-fit: cover;">
@@ -164,7 +168,11 @@ $testimonials = $db->query("SELECT * FROM testimonials ORDER BY id DESC")->fetch
                         <?php foreach ($testimonials as $t): ?>
                         <div class="list-group-item p-4 border-light hover-bg-light transition-all shadow-hover-sm">
                             <div class="d-flex gap-4">
-                                <img src="../<?php echo $t['image']; ?>" class="rounded-circle shadow-sm" style="width: 70px; height: 70px; object-fit: cover;">
+                                <?php 
+                                    $listImg = $t['image'] ?: 'img/testimonial-1.jpg';
+                                    $listDisplayUrl = (strpos($listImg, 'uploads/') === 0) ? $listImg : '../' . $listImg;
+                                ?>
+                                <img src="<?php echo $listDisplayUrl; ?>" class="rounded-circle shadow-sm" style="width: 70px; height: 70px; object-fit: cover;">
                                 <div class="flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>

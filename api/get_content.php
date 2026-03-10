@@ -3,9 +3,11 @@
  * Public REST API for Frontend - Boost Stride
  */
 
-require_once '../admin/core/Config.php';
-require_once '../admin/core/Database.php';
-require_once '../admin/core/Middleware.php';
+// Use absolute path for robustness
+$baseDir = dirname(__DIR__);
+require_once $baseDir . '/admin/core/Config.php';
+require_once $baseDir . '/admin/core/Database.php';
+require_once $baseDir . '/admin/core/Middleware.php';
 
 use Core\Database;
 use Core\Middleware;
@@ -38,6 +40,10 @@ try {
     $stmt = $db->query("SELECT * FROM testimonials");
     $testimonials = $stmt->fetchAll();
 
+    // 4. Fetch Team
+    $stmt = $db->query("SELECT * FROM team ORDER BY sort_order ASC, id DESC");
+    $team = $stmt->fetchAll();
+
     // Response Assembly - Syncing with Admin Panel Keys
     $response = [
         "status" => "success",
@@ -66,7 +72,7 @@ try {
             ])),
             "about" => json_decode($settingsRaw['about_data'] ?? '{}'),
             "features" => json_decode($settingsRaw['features_data'] ?? '[]'),
-            "team" => json_decode($settingsRaw['team_data'] ?? '[]'),
+            "team" => $team,
             "services" => $services,
             "testimonials" => $testimonials
         ]

@@ -34,6 +34,9 @@ switch($page) {
     case 'testimonials':
         include 'views/pages/testimonials.php';
         break;
+    case 'team':
+        include 'views/pages/team.php';
+        break;
     case 'settings':
         include 'views/pages/settings.php';
         break;
