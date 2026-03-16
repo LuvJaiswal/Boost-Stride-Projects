@@ -621,3 +621,328 @@
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+
+/*** ========================================================
+     MOBILE RESPONSIVENESS — Comprehensive Overhaul
+     Covers xs (<576px), sm (576-767px), md (768-991px)
+     ======================================================== ***/
+
+/* ── Global Fixes ── */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ── Navbar ── */
+@media (max-width: 991.98px) {
+    .navbar-light .navbar-nav .nav-link {
+        padding: 10px 16px;
+        margin-right: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .navbar-collapse {
+        padding: 0.5rem 1rem 1rem;
+        background: #fff;
+        border-top: 1px solid #f0f0f0;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+    }
+
+    .navbar-brand {
+        padding: 12px 16px !important;
+    }
+
+    .navbar-brand h2 {
+        font-size: 1.4rem !important;
+    }
+
+    /* Hide the desktop CTA button on small screens — it overlaps */
+    #nav-cta-button.d-none { display: none !important; }
+
+    /* Mobile-friendly CTA at bottom of collapsed menu */
+    .navbar-nav + a.btn {
+        display: block;
+        margin: 8px 16px 4px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar-brand h2 {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* ── Page Header Banner ── */
+@media (max-width: 767.98px) {
+    .page-header {
+        min-height: 200px;
+        padding: 40px 0 !important;
+    }
+
+    .page-header h1 {
+        font-size: clamp(1.6rem, 6vw, 2.5rem) !important;
+    }
+
+    .breadcrumb {
+        font-size: 0.8rem;
+    }
+}
+
+/* ── Section Headings ── */
+@media (max-width: 767.98px) {
+    .section-title h1 {
+        font-size: clamp(1.5rem, 5.5vw, 2rem) !important;
+        padding: 0 30px;
+    }
+
+    .section-title h1::before,
+    .section-title h1::after {
+        width: 25px;
+    }
+
+    .display-5 {
+        font-size: clamp(1.4rem, 5vw, 2rem) !important;
+    }
+
+    .display-3 {
+        font-size: clamp(1.8rem, 7vw, 3rem) !important;
+    }
+}
+
+/* ── Hero Carousel ── */
+@media (max-width: 767.98px) {
+    .header-carousel .owl-carousel-item {
+        min-height: 420px !important;
+    }
+
+    .header-carousel .owl-carousel-item .container {
+        text-align: center;
+    }
+
+    .header-carousel .owl-carousel-item h5 {
+        font-size: 13px !important;
+    }
+
+    .header-carousel .owl-carousel-item h1 {
+        font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+    }
+
+    .header-carousel .owl-nav {
+        bottom: 15px;
+        width: 120px;
+    }
+
+    .header-carousel .owl-nav .owl-prev,
+    .header-carousel .owl-nav .owl-next {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+/* ── About Section ── */
+@media (max-width: 991.98px) {
+    .container.about {
+        max-width: 100% !important;
+    }
+
+    .about-img img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+}
+
+/* ── Services ── */
+@media (max-width: 767.98px) {
+    .service-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .service-item img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .service-item img {
+        height: 190px;
+    }
+}
+
+/* ── Team Section ── */
+.team-item {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+}
+
+@media (max-width: 767.98px) {
+    /* Show 2 columns of team on mobile */
+    #team-container .col-lg-3.col-md-6 {
+        width: 50% !important;
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+
+    .team-item .overflow-hidden img {
+        height: 240px !important;
+    }
+
+    .team-item .text-center.p-4 {
+        padding: 1rem !important;
+    }
+
+    .team-item h5 {
+        font-size: 0.95rem;
+    }
+
+    .team-item small {
+        font-size: 0.68rem !important;
+    }
+}
+
+@media (max-width: 479px) {
+    /* Single column on very small screens */
+    #team-container .col-lg-3.col-md-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    .team-item .overflow-hidden img {
+        height: 300px !important;
+    }
+}
+
+/* ── Testimonials ── */
+@media (max-width: 767.98px) {
+    .testimonial-carousel::before,
+    .testimonial-carousel::after {
+        width: 40px !important;
+    }
+
+    .testimonial-carousel .testimonial-text {
+        padding: 1.2rem !important;
+    }
+
+    .testimonial-carousel .owl-nav {
+        width: 200px;
+    }
+}
+
+/* ── Feature Section ── */
+@media (max-width: 991.98px) {
+    .container.feature {
+        max-width: 100% !important;
+    }
+
+    .feature-text {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* ── Quote / CTA Section ── */
+@media (max-width: 991.98px) {
+    .container.quote {
+        max-width: 100% !important;
+    }
+
+    .quote-text {
+        padding: 1.5rem !important;
+    }
+}
+
+/* ── Footer ── */
+@media (max-width: 767.98px) {
+    .footer .row > div {
+        margin-bottom: 2rem;
+    }
+
+    .footer h4 {
+        font-size: 1.1rem;
+    }
+
+    .footer .btn.btn-link {
+        font-size: 14px;
+    }
+
+    .footer .copyright {
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .footer .copyright .col-md-6:last-child {
+        text-align: center !important;
+        margin-top: 8px;
+    }
+}
+
+/* ── Spacing & Container Tweaks ── */
+@media (max-width: 767.98px) {
+    .container-xxl.py-5,
+    .container-xxl.py-5 > .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    section,
+    .py-5 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+}
+
+/* ── Back to Top Button ── */
+@media (max-width: 575.98px) {
+    .back-to-top {
+        right: 20px;
+        bottom: 20px;
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+
+/* ── Contact Page ── */
+@media (max-width: 991.98px) {
+    .container.contact {
+        max-width: 100% !important;
+    }
+
+    .contact-text {
+        padding: 1.5rem !important;
+    }
+}
+
+/* ── Forms ── */
+@media (max-width: 575.98px) {
+    .form-control,
+    .form-select,
+    textarea.form-control {
+        font-size: 16px; /* Prevent iOS zoom on focus */
+    }
+}
+
+/* ── Tables on mobile ── */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+    }
+}

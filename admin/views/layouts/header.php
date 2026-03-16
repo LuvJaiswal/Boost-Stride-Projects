@@ -22,27 +22,64 @@
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         }
 
+        /* Prevent horizontal scroll at the HTML level only — avoids killing vertical scroll on body */
+        html {
+            overflow-x: hidden;
+        }
+
         body { 
             font-family: 'Outfit', sans-serif; 
             background: var(--content-bg);
             color: #1e293b;
-            overflow-x: hidden;
+            overflow: visible; /* allow natural vertical scroll */
         }
 
         /* Sidebar Styles */
         .sidebar { 
             width: var(--sidebar-width);
-            height: 100vh; 
+            height: 100vh;
             background: var(--sidebar-bg); 
             color: white; 
-            padding: 2rem 1.5rem;
             position: fixed;
             left: 0;
             top: 0;
             z-index: 1050;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;          /* OUR CSS — no Bootstrap interference */
+            flex-direction: column;
+            overflow: hidden;       /* contain children; scroll in .sidebar-body */
         }
+
+        /* Hide sidebar on mobile via OUR media query (no Bootstrap d-none needed) */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                display: none;  /* hide on mobile; offcanvas is used instead */
+            }
+        }
+
+        /* Pinned brand area at top of sidebar */
+        .sidebar-header {
+            padding: 2rem 1.5rem 1rem 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Scrollable nav body */
+        .sidebar-body {
+            flex: 1 1 0;   /* grow AND shrink from 0 — critical for overflow to work */
+            min-height: 0; /* MUST have this or flex won't constrain the height */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 0 1.5rem 2rem 1.5rem;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Thin custom scrollbar for the sidebar nav */
+        .sidebar-body::-webkit-scrollbar { width: 4px; }
+        .sidebar-body::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+        .sidebar-body::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
 
         .sidebar-brand {
             font-size: 1.6rem;
@@ -50,7 +87,7 @@
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 3rem;
+            margin-bottom: 0.5rem; /* reduced from 3rem — was wasting vertical space */
             display: flex;
             align-items: center;
             gap: 12px;
@@ -110,15 +147,18 @@
         /* Main Content */
         .main-wrapper {
             margin-left: var(--sidebar-width);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            /* Ensure this wrapper allows normal vertical document flow */
+            overflow: visible;
         }
 
         .main-content { 
             padding: 2rem 3rem 4rem 3rem; 
             flex: 1;
+            overflow: visible; /* do NOT clip content — let the browser page scroll */
         }
 
         .top-navbar {
@@ -215,11 +255,62 @@
 
         /* Mobile specific enhancements */
         @media (max-width: 991.98px) {
-            .sidebar { transform: translateX(-100%); z-index: 1100; }
-            .sidebar.show { transform: translateX(0); }
+            /* .sidebar is already display:none at this breakpoint (see media query above) */
             .main-wrapper { margin-left: 0; }
-            .main-content { padding: 1.5rem; }
-            .top-navbar { padding: 1rem 1.5rem; }
+            .main-content { padding: 1.25rem; }
+            .top-navbar { padding: 1rem 1.25rem; }
+        }
+
+        /* ── Admin Mobile Polish ── */
+        @media (max-width: 767.98px) {
+            .main-content { padding: 1rem 0.875rem 3rem; }
+
+            /* Prevent card hover lift from causing scroll jank */
+            .card:hover { transform: none; }
+
+            /* Make stat/dashboard cards full width */
+            .row.g-4 > [class*="col-lg"],
+            .row.g-4 > [class*="col-md"] {
+                margin-bottom: 0;
+            }
+
+            /* Responsive tables */
+            .table-responsive { font-size: 0.82rem; }
+            .table td, .table th { white-space: nowrap; }
+
+            /* Better button sizing on touch */
+            .btn { min-height: 40px; }
+
+            /* Stack form rows */
+            .row.g-3 > .col-md-6 { flex: 0 0 100%; max-width: 100%; }
+
+            /* Breadcrumb smaller */
+            .breadcrumb { font-size: 0.7rem; }
+
+            /* Page heading size */
+            h2.fw-bold { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 575.98px) {
+            .main-content { padding: 0.75rem 0.75rem 3rem; }
+
+            /* Prevent iOS font bump on form inputs */
+            .form-control,
+            .form-select,
+            textarea.form-control { font-size: 16px !important; }
+
+            /* Mobile top bar  */
+            .d-lg-none.sticky-top h5 { font-size: 1rem; }
+
+            /* Smaller rounded cards on phone */
+            .card { border-radius: 16px !important; }
+
+            /* Full-width buttons on small screens */
+            .btn.btn-gradient { width: 100%; justify-content: center; }
+
+            /* Stack action buttons */
+            .d-flex.gap-2.justify-content-end { flex-wrap: wrap; gap: 6px !important; }
+            .d-flex.gap-2.justify-content-end .btn { flex: 1 1 auto; }
         }
 
         /* Custom Scrollbar for Sleek Feel */
@@ -238,60 +329,66 @@
         </button>
     </div>
 
-    <!-- Sidebar for Desktop -->
-    <nav class="sidebar d-none d-lg-block">
-        <div class="sidebar-brand">
-            <div class="bg-white p-2 rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-                <i class="fas fa-rocket text-primary" style="font-size: 1.4rem;"></i>
+    <!-- Sidebar for Desktop (classes removed: Bootstrap d-lg-block was overriding display:flex) -->
+    <nav class="sidebar">
+        <!-- Pinned brand header -->
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <div class="bg-white p-2 rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                    <i class="fas fa-rocket text-primary" style="font-size: 1.4rem;"></i>
+                </div>
+                <span>Boost Stride</span>
             </div>
-            <span>Boost Stride</span>
         </div>
 
-        <div class="sidebar-nav-label">Main Dashboard</div>
-        <a href="?page=dashboard" class="<?php echo ($page ?? 'dashboard') === 'dashboard' ? 'active' : ''; ?>">
-            <i class="fas fa-grid-2"></i> Dashboard Overview
-        </a>
+        <!-- Scrollable nav body -->
+        <div class="sidebar-body">
+            <div class="sidebar-nav-label">Main Dashboard</div>
+            <a href="?page=dashboard" class="<?php echo ($page ?? 'dashboard') === 'dashboard' ? 'active' : ''; ?>">
+                <i class="fas fa-grid-2"></i> Dashboard Overview
+            </a>
 
-        <div class="sidebar-nav-label">Website Content</div>
-        <a href="?page=custom_pages" class="<?php echo ($page ?? '') === 'custom_pages' ? 'active' : ''; ?>">
-            <i class="fas fa-layer-group"></i> Manage Pages
-        </a>
-        <a href="?page=menu" class="<?php echo ($page ?? '') === 'menu' ? 'active' : ''; ?>">
-            <i class="fas fa-sitemap"></i> Navigation Menu
-        </a>
-        <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
-            <i class="fas fa-shoe-prints"></i> Footer Builder
-        </a>
+            <div class="sidebar-nav-label">Website Content</div>
+            <a href="?page=custom_pages" class="<?php echo ($page ?? '') === 'custom_pages' ? 'active' : ''; ?>">
+                <i class="fas fa-layer-group"></i> Manage Pages
+            </a>
+            <a href="?page=menu" class="<?php echo ($page ?? '') === 'menu' ? 'active' : ''; ?>">
+                <i class="fas fa-sitemap"></i> Navigation Menu
+            </a>
+            <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
+                <i class="fas fa-shoe-prints"></i> Footer Builder
+            </a>
 
-        <div class="sidebar-nav-label">Module Editors</div>
-        <a href="?page=hero" class="<?php echo ($page ?? '') === 'hero' ? 'active' : ''; ?>">
-            <i class="fas fa-window-restore"></i> Hero Section
-        </a>
-        <a href="?page=services" class="<?php echo ($page ?? '') === 'services' ? 'active' : ''; ?>">
-            <i class="fas fa-tools"></i> Services Catalog
-        </a>
-        <a href="?page=testimonials" class="<?php echo ($page ?? '') === 'testimonials' ? 'active' : ''; ?>">
-            <i class="fas fa-comment-dots"></i> Client Reviews
-        </a>
-        <a href="?page=team" class="<?php echo ($page ?? '') === 'team' ? 'active' : ''; ?>">
-            <i class="fas fa-users"></i> Staff & Team
-        </a>
-        <a href="?page=pages" class="<?php echo ($page ?? '') === 'pages' ? 'active' : ''; ?>">
-            <i class="fas fa-file-invoice"></i> Dynamic Sections
-        </a>
+            <div class="sidebar-nav-label">Module Editors</div>
+            <a href="?page=hero" class="<?php echo ($page ?? '') === 'hero' ? 'active' : ''; ?>">
+                <i class="fas fa-window-restore"></i> Hero Section
+            </a>
+            <a href="?page=services" class="<?php echo ($page ?? '') === 'services' ? 'active' : ''; ?>">
+                <i class="fas fa-tools"></i> Services Catalog
+            </a>
+            <a href="?page=testimonials" class="<?php echo ($page ?? '') === 'testimonials' ? 'active' : ''; ?>">
+                <i class="fas fa-comment-dots"></i> Client Reviews
+            </a>
+            <a href="?page=team" class="<?php echo ($page ?? '') === 'team' ? 'active' : ''; ?>">
+                <i class="fas fa-users"></i> Staff & Team
+            </a>
+            <a href="?page=pages" class="<?php echo ($page ?? '') === 'pages' ? 'active' : ''; ?>">
+                <i class="fas fa-file-invoice"></i> Dynamic Sections
+            </a>
 
-        <div class="sidebar-nav-label">Settings & SEO</div>
-        <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
-            <i class="fas fa-search-plus"></i> Search Engine (SEO)
-        </a>
-        <a href="?page=settings" class="<?php echo ($page ?? '') === 'settings' ? 'active' : ''; ?>">
-            <i class="fas fa-sliders-h"></i> System Config
-        </a>
-        
-        <hr class="mt-4">
-        <a href="logout.php" class="text-danger mt-2">
-            <i class="fas fa-power-off"></i> Sign Out
-        </a>
+            <div class="sidebar-nav-label">Settings & SEO</div>
+            <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
+                <i class="fas fa-search-plus"></i> Search Engine (SEO)
+            </a>
+            <a href="?page=settings" class="<?php echo ($page ?? '') === 'settings' ? 'active' : ''; ?>">
+                <i class="fas fa-sliders-h"></i> System Config
+            </a>
+
+            <hr style="border-color: rgba(255,255,255,0.08); margin-top: 1.5rem;">
+            <a href="logout.php" class="text-danger" style="margin-top: 0.5rem;">
+                <i class="fas fa-power-off"></i> Sign Out
+            </a>
+        </div>
     </nav>
 
     <div class="main-wrapper">
@@ -324,53 +421,67 @@
     </div>
 
     <!-- Sidebar Offcanvas for Mobile -->
-    <div class="offcanvas offcanvas-start bg-sidebar text-white" tabindex="-1" id="sidebarOffcanvas" style="background: var(--sidebar-bg);">
-        <div class="offcanvas-header pt-4 px-4">
+    <div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebarOffcanvas" style="background: var(--sidebar-bg); width: 280px;">
+        <div class="offcanvas-header pt-4 px-4 border-bottom" style="border-color: rgba(255,255,255,0.08) !important;">
             <div class="sidebar-brand mb-0">
-                <i class="fas fa-rocket"></i>
+                <div class="bg-white p-2 rounded-3 d-flex align-items-center justify-content-center" style="width:38px; height:38px;">
+                    <i class="fas fa-rocket text-primary" style="font-size:1.1rem;"></i>
+                </div>
                 <span>Boost Stride</span>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
         </div>
-        <div class="offcanvas-body p-4 pt-0">
-            <div class="sidebar p-0 position-relative w-100">
+        <div class="offcanvas-body px-3 pb-4" style="overflow-y: auto;">
+            <div class="sidebar p-0 position-relative w-100" style="height: auto;">
+                <div class="sidebar-nav-label">Main Dashboard</div>
                 <a href="?page=dashboard" class="<?php echo ($page ?? 'dashboard') === 'dashboard' ? 'active' : ''; ?>">
                     <i class="fas fa-home"></i> Dashboard
                 </a>
-                <a href="?page=hero" class="<?php echo ($page ?? '') === 'hero' ? 'active' : ''; ?>">
-                    <i class="fas fa-display"></i> Hero Section
-                </a>
-                <a href="?page=services" class="<?php echo ($page ?? '') === 'services' ? 'active' : ''; ?>">
-                    <i class="fas fa-cog"></i> Services
-                </a>
-                <a href="?page=testimonials" class="<?php echo ($page ?? '') === 'testimonials' ? 'active' : ''; ?>">
-                    <i class="fas fa-quote-left"></i> Testimonials
-                </a>
-                <a href="?page=settings" class="<?php echo ($page ?? '') === 'settings' ? 'active' : ''; ?>">
-                    <i class="fas fa-sliders-h"></i> System Settings
-                </a>
-                <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
-                    <i class="fas fa-search"></i> SEO & Meta
-                </a>
-                <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
-                    <i class="fas fa-shoe-prints"></i> Footer Section
+
+                <div class="sidebar-nav-label">Website Content</div>
+                <a href="?page=custom_pages" class="<?php echo ($page ?? '') === 'custom_pages' ? 'active' : ''; ?>">
+                    <i class="fas fa-layer-group"></i> Manage Pages
                 </a>
                 <a href="?page=menu" class="<?php echo ($page ?? '') === 'menu' ? 'active' : ''; ?>">
-                    <i class="fas fa-bars"></i> Navigation Menu
+                    <i class="fas fa-sitemap"></i> Navigation Menu
+                </a>
+                <a href="?page=footer" class="<?php echo ($page ?? '') === 'footer' ? 'active' : ''; ?>">
+                    <i class="fas fa-shoe-prints"></i> Footer Builder
+                </a>
+
+                <div class="sidebar-nav-label">Module Editors</div>
+                <a href="?page=hero" class="<?php echo ($page ?? '') === 'hero' ? 'active' : ''; ?>">
+                    <i class="fas fa-window-restore"></i> Hero Section
+                </a>
+                <a href="?page=services" class="<?php echo ($page ?? '') === 'services' ? 'active' : ''; ?>">
+                    <i class="fas fa-tools"></i> Services Catalog
+                </a>
+                <a href="?page=testimonials" class="<?php echo ($page ?? '') === 'testimonials' ? 'active' : ''; ?>">
+                    <i class="fas fa-comment-dots"></i> Client Reviews
+                </a>
+                <a href="?page=team" class="<?php echo ($page ?? '') === 'team' ? 'active' : ''; ?>">
+                    <i class="fas fa-users"></i> Staff &amp; Team
                 </a>
                 <a href="?page=pages" class="<?php echo ($page ?? '') === 'pages' ? 'active' : ''; ?>">
-                    <i class="fas fa-file-alt"></i> Page Content
+                    <i class="fas fa-file-invoice"></i> Dynamic Sections
                 </a>
-                <a href="?page=custom_pages" class="<?php echo ($page ?? '') === 'custom_pages' ? 'active' : ''; ?>">
-                    <i class="fas fa-plus-circle"></i> Manage Pages
+
+                <div class="sidebar-nav-label">Settings &amp; SEO</div>
+                <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
+                    <i class="fas fa-search-plus"></i> Search Engine (SEO)
                 </a>
-                <hr>
+                <a href="?page=settings" class="<?php echo ($page ?? '') === 'settings' ? 'active' : ''; ?>">
+                    <i class="fas fa-sliders-h"></i> System Config
+                </a>
+
+                <hr style="border-color: rgba(255,255,255,0.08);">
                 <a href="logout.php" class="text-danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-power-off"></i> Sign Out
                 </a>
             </div>
         </div>
     </div>
+
 
     <!-- Main Content Slot -->
     <main class="main-content animate-fade-in">
