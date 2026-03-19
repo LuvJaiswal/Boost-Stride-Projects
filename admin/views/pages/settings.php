@@ -9,17 +9,28 @@ $db = Database::getInstance();
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $map_url = $_POST['google_map'] ?? '';
+    
+    // Auto-extract src if full iframe was pasted
+    if (strpos($map_url, '<iframe') !== false) {
+        preg_match('/src=["\']([^"\']+)["\']/', $map_url, $match);
+        $map_url = $match[1] ?? $map_url;
+    }
+
     $contact_info = json_encode([
         "address" => $_POST['address'],
         "phone" => $_POST['phone'],
-        "email" => $_POST['email']
+        "email" => $_POST['email'],
+        "contact_title" => $_POST['contact_title'] ?? 'Get In Touch',
+        "contact_desc" => $_POST['contact_desc'] ?? 'Have questions about your vehicle?',
+        "google_map" => $map_url
     ]);
 
     $stmt = $db->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('contact_info', ?) 
                           ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
     
     if ($stmt->execute([$contact_info])) {
-        $message = '<div class="alert alert-success border-0 shadow-lg rounded-4 animate-fade-in"><i class="fas fa-check-circle me-2"></i><b>Profile Synchronized:</b> Business contact parameters updated.</div>';
+        $message = '<div class="alert alert-success border-0 shadow-lg rounded-4 animate-fade-in"><i class="fas fa-check-circle me-2"></i><b>Profile Synchronized:</b> Business contact parameters and maps integration updated.</div>';
     }
 }
 
@@ -66,7 +77,6 @@ $current = json_decode($stmt->fetchColumn() ?: '{}', true);
                                 <span class="input-group-text bg-light border-0 px-3"><i class="fas fa-location-dot text-muted"></i></span>
                                 <input type="text" name="address" class="form-control border-0 bg-light py-3 rounded-end-3 fw-bold" value="<?php echo htmlspecialchars($current['address'] ?? '123 Street, New York, USA'); ?>" placeholder="e.g. 123 Main St, Hobart" required>
                             </div>
-                            <div class="form-text mt-3 extra-small text-muted"><i class="fas fa-info-circle me-1"></i> This address will be displayed in the footer and contact page.</div>
                         </div>
                         
                         <div class="mb-5">
@@ -82,6 +92,28 @@ $current = json_decode($stmt->fetchColumn() ?: '{}', true);
                             <div class="input-group shadow-sm rounded-3">
                                 <span class="input-group-text bg-light border-0 px-3"><i class="fas fa-envelope-open-text text-muted"></i></span>
                                 <input type="email" name="email" class="form-control border-0 bg-light py-3 rounded-end-3 fw-bold" value="<?php echo htmlspecialchars($current['email'] ?? 'info@example.com'); ?>" placeholder="hello@yourshop.com" required>
+                            </div>
+                        </div>
+
+                        <hr class="my-5 opacity-25">
+                        <label class="extra-small fw-bold text-muted tracking-widest mb-4 d-block">CONTACT PAGE META</label>
+
+                        <div class="mb-5">
+                            <label class="extra-small fw-bold text-primary tracking-widest mb-3 d-block">SECTION HEADLINE</label>
+                            <input type="text" name="contact_title" class="form-control border-0 bg-light py-3 rounded-3 fw-bold shadow-sm" value="<?php echo htmlspecialchars($current['contact_title'] ?? 'Get In Touch'); ?>" placeholder="e.g. Visit Our Shop">
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="extra-small fw-bold text-primary tracking-widest mb-3 d-block">LEAD DESCRIPTION</label>
+                            <textarea name="contact_desc" class="form-control border-0 bg-light p-4 rounded-3 shadow-sm" rows="3" placeholder="Compelling 2-sentence hook for the contact page..."><?php echo htmlspecialchars($current['contact_desc'] ?? 'Have questions about your vehicle? Our expert team is here to help.'); ?></textarea>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="extra-small fw-bold text-primary tracking-widest mb-3 d-block">GOOGLE MAP EMBED URL</label>
+                            <input type="text" name="google_map" class="form-control border-0 bg-light py-3 rounded-3 font-monospace small shadow-sm" value="<?php echo htmlspecialchars($current['google_map'] ?? ''); ?>" placeholder="https://www.google.com/maps/embed?pb=...">
+                            <div class="form-text mt-3 extra-small text-muted">
+                                <i class="fas fa-info-circle me-1"></i> <b>Instructions:</b> Go to Google Maps, click <b>Share</b>, select the <b>Embed a map</b> tab, and paste the code/link here. 
+                                <br><span class="text-danger fw-bold"><i class="fas fa-exclamation-triangle me-1"></i> Don't use the simple "Share link" (maps.app.goo.gl) as it won't display.</span>
                             </div>
                         </div>
 
@@ -102,6 +134,6 @@ $current = json_decode($stmt->fetchColumn() ?: '{}', true);
 <style>
     .uppercase-tracking { text-transform: uppercase; letter-spacing: 2.5px; }
     .extra-small { font-size: 0.65rem; }
-    .btn-gradient { background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); transition: all 0.3s ease; }
-    .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(13, 110, 253, 0.3); }
+    .btn-gradient { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); transition: all 0.3s ease; }
+    .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3); }
 </style>

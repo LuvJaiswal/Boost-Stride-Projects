@@ -1,12 +1,19 @@
     <!-- Footer Start -->
+    <?php
+    use Core\Database;
+    $db = Database::getInstance();
+    $stmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'contact_info'");
+    $stmt->execute();
+    $c_info = json_decode($stmt->fetchColumn() ?: '{}', true);
+    ?>
     <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 id="footer-title-address" class="text-light mb-4">Address</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><span id="footer-address">123 Street, New York, USA</span></p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><span id="footer-phone">+012 345 67890</span></p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><span id="footer-email">info@example.com</span></p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><span id="footer-address"><?php echo htmlspecialchars($c_info['address'] ?? '123 Street, New York, USA'); ?></span></p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><span id="footer-phone"><?php echo htmlspecialchars($c_info['phone'] ?? '+012 345 67890'); ?></span></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><span id="footer-email"><?php echo htmlspecialchars($c_info['email'] ?? 'info@example.com'); ?></span></p>
                     <div class="d-flex pt-2">
                         <a id="footer-twitter" class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a id="footer-facebook" class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
