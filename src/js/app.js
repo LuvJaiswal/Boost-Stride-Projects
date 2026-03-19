@@ -257,18 +257,29 @@ class ContentLoader {
         const descElements = document.querySelectorAll("#about-desc");
         const clientsElements = document.querySelectorAll("#about-clients, #about-clients-count");
         const repairsElements = document.querySelectorAll("#about-repairs, #about-repairs-count");
+        const imageElements = document.querySelectorAll("#about-img, .about img");
 
         titleElements.forEach(el => {
             if (this.data.about?.title) el.textContent = this.data.about.title;
         });
         descElements.forEach(el => {
-            if (this.data.about?.description) el.innerHTML = this.data.about.description.replace(/\n/g, '<br>');
+            if (this.data.about?.description) {
+                // Fix internal image paths for narratives
+                let html = this.data.about.description.replace(/\n/g, '<br>');
+                html = html.replace(/src="uploads\//g, 'src="admin/uploads/');
+                el.innerHTML = html;
+            }
         });
         clientsElements.forEach(el => {
             if (this.data.about?.clients) el.textContent = this.data.about.clients;
         });
         repairsElements.forEach(el => {
             if (this.data.about?.repairs) el.textContent = this.data.about.repairs;
+        });
+        imageElements.forEach(el => {
+            if (this.data.about?.image) {
+                el.setAttribute('src', this.getImagePath(this.data.about.image, 'img/about.jpg'));
+            }
         });
     }
 

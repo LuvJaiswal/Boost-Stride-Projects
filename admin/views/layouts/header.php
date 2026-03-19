@@ -253,71 +253,117 @@
 
         .animate-fade-in { animation: fadeInUp 0.6s ease-out forwards; }
 
-        /* Mobile specific enhancements */
+        /* ── Admin Mobile Polish ── */
         @media (max-width: 991.98px) {
-            /* .sidebar is already display:none at this breakpoint (see media query above) */
             .main-wrapper { margin-left: 0; }
-            .main-content { padding: 1.25rem; }
+            .main-content { padding: 1.5rem 1rem 3rem 1rem !important; }
             .top-navbar { padding: 1rem 1.25rem; }
+            
+            /* Sidebar inside offcanvas needs specific width/reset */
+            .offcanvas .sidebar { 
+                display: flex !important; 
+                width: 100% !important; 
+                height: 100% !important; 
+                position: relative !important; 
+                background: transparent !important;
+                border: none !important;
+            }
+            .offcanvas .sidebar-body { padding: 1rem !important; }
+            .offcanvas .sidebar a { padding: 1rem 1.25rem !important; margin-bottom: 0.5rem !important; }
         }
 
-        /* ── Admin Mobile Polish ── */
         @media (max-width: 767.98px) {
-            .main-content { padding: 1rem 0.875rem 3rem; }
-
             /* Prevent card hover lift from causing scroll jank */
             .card:hover { transform: none; }
 
-            /* Make stat/dashboard cards full width */
-            .row.g-4 > [class*="col-lg"],
-            .row.g-4 > [class*="col-md"] {
-                margin-bottom: 0;
+            /* Better button sizing on touch */
+            .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+
+            /* Stack action buttons in headers */
+            .d-flex.gap-2.justify-content-end,
+            .top-navbar .d-flex.gap-3 { 
+                flex-wrap: wrap; 
+                gap: 8px !important; 
             }
 
-            /* Responsive tables */
-            .table-responsive { font-size: 0.82rem; }
-            .table td, .table th { white-space: nowrap; }
+            /* Responsive tables with horizontal scroll */
+            .table-responsive { 
+                border-radius: 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-bottom: 1rem;
+            }
+            .table th, .table td { 
+                padding: 1rem 0.75rem !important; 
+                font-size: 0.85rem; 
+                white-space: nowrap;
+            }
 
-            /* Better button sizing on touch */
-            .btn { min-height: 40px; }
-
-            /* Stack form rows */
-            .row.g-3 > .col-md-6 { flex: 0 0 100%; max-width: 100%; }
-
+            /* Image previews in tables */
+            .table img { width: 40px !important; height: 40px !important; }
+            
             /* Breadcrumb smaller */
-            .breadcrumb { font-size: 0.7rem; }
-
-            /* Page heading size */
-            h2.fw-bold { font-size: 1.5rem; }
+            .breadcrumb { font-size: 0.75rem; }
+            h2.fw-bold { font-size: 1.6rem !important; }
         }
 
         @media (max-width: 575.98px) {
-            .main-content { padding: 0.75rem 0.75rem 3rem; }
-
-            /* Prevent iOS font bump on form inputs */
-            .form-control,
-            .form-select,
-            textarea.form-control { font-size: 16px !important; }
-
-            /* Mobile top bar  */
-            .d-lg-none.sticky-top h5 { font-size: 1rem; }
-
-            /* Smaller rounded cards on phone */
-            .card { border-radius: 16px !important; }
-
             /* Full-width buttons on small screens */
-            .btn.btn-gradient { width: 100%; justify-content: center; }
+            .btn-gradient, .btn-dark, .btn-white { 
+                width: 100% !important; 
+                margin-top: 5px;
+            }
 
-            /* Stack action buttons */
-            .d-flex.gap-2.justify-content-end { flex-wrap: wrap; gap: 6px !important; }
-            .d-flex.gap-2.justify-content-end .btn { flex: 1 1 auto; }
+            /* Stack grid columns */
+            .row.g-4 > [class*="col-"] {
+                width: 100% !important;
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* Dashboard icons smaller on mobile */
+            .stat-icon { width: 48px; height: 48px; border-radius: 14px; font-size: 1.1rem; }
+            .stat-value { font-size: 1.5rem !important; }
         }
 
-        /* Custom Scrollbar for Sleek Feel */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        /* Summernote UI Fixes */
+        .note-modal-backdrop { z-index: 1060 !important; }
+        .note-modal { z-index: 1070 !important; margin-top: 5vh; }
+        @media (max-width: 767.98px) {
+            .note-editable { padding: 25px !important; margin: 15px auto !important; }
+            .note-toolbar { padding: 10px 15px !important; }
+        }
+        .note-editor .note-editing-area { background: #f1f5f9; }
+        .note-editable { 
+            background: white !important; 
+            max-width: 900px !important; 
+            margin: 40px auto !important; 
+            padding: 60px !important; 
+            min-height: 600px !important; 
+            border-radius: 4px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            font-size: 1.1rem !important;
+            line-height: 1.8 !important;
+        }
+        .note-editor.note-frame { border: none !important; border-radius: 12px; overflow: hidden; background: #f1f5f9; }
+        .note-toolbar { 
+            background: white !important; 
+            border-bottom: 1px solid #eef2f6 !important; 
+            padding: 15px 30px !important; 
+            position: sticky; 
+            top: 0; 
+            z-index: 500;
+        }
+        
+        /* Blocks Styling inside Editor */
+        .note-editable .row { border: 1px dashed #e2e8f0; padding: 10px; border-radius: 8px; position: relative; }
+        .note-editable .row::before { content: 'ROW CONTAINER'; position: absolute; top: -10px; left: 10px; background: #4f46e5; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        
+        /* Blocks Dropdown Styling */
+        .wp-blocks-dropdown { min-width: 250px !important; padding: 10px !important; border-radius: 15px !important; border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; background: white !important; }
+        .wp-blocks-dropdown .note-dropdown-item { padding: 10px 15px !important; border-radius: 8px !important; transition: all 0.2s !important; display: flex !important; align-items: center !important; cursor: pointer !important; }
+        .wp-blocks-dropdown .note-dropdown-item:hover { background: #f1f5f9 !important; transform: translateX(5px); }
+        .wp-blocks-dropdown i { width: 25px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -377,6 +423,26 @@
             </a>
 
             <div class="sidebar-nav-label">Settings & SEO</div>
+            <a href="?page=leads" class="<?php echo ($page ?? '') === 'leads' ? 'active' : ''; ?>">
+                <i class="fas fa-envelopes-bulk"></i> Customer Leads
+                <?php 
+                    try {
+                        // Safe check for table existence to prevent crash if not imported yet
+                        $table_check = $db->query("SHOW TABLES LIKE 'leads'")->fetch();
+                        if ($table_check) {
+                            $new_leads_count = $db->query("SELECT COUNT(*) FROM leads WHERE status = 'new'")->fetchColumn();
+                            if($new_leads_count > 0): 
+                ?>
+                            <span class="badge bg-danger rounded-pill ms-auto" style="font-size: 0.6rem;"><?php echo $new_leads_count; ?></span>
+                <?php 
+                            endif;
+                        }
+                    } catch (Exception $e) {} 
+                ?>
+            </a>
+            <a href="?page=pages" class="<?php echo ($page ?? '') === 'pages' ? 'active' : ''; ?>">
+                <i class="fas fa-palette"></i> Appearance
+            </a>
             <a href="?page=seo" class="<?php echo ($page ?? '') === 'seo' ? 'active' : ''; ?>">
                 <i class="fas fa-search-plus"></i> Search Engine (SEO)
             </a>

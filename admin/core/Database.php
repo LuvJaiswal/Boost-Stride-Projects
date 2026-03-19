@@ -53,6 +53,7 @@ class Database {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
                 description TEXT,
+                content LONGTEXT,
                 image VARCHAR(255),
                 sort_order INT DEFAULT 0
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -78,6 +79,10 @@ class Database {
                 content LONGTEXT,
                 meta_title VARCHAR(255),
                 meta_description TEXT,
+                header_image VARCHAR(255),
+                featured_image VARCHAR(255),
+                video_url VARCHAR(255),
+                external_link VARCHAR(255),
                 status ENUM('draft', 'published') DEFAULT 'published',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

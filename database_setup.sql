@@ -30,9 +30,10 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Dumping data for table `settings`
 --
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES
-('hero_data', '{"subtitle":"Welcome To Boost Stride","title":"Best Automotive & Maintenance Services","description":"Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr."}'),
-('contact_info', '{"address":"123 Street, New York, USA","phone":"+012 345 6789","email":"info@example.com"}'),
-('seo_data', '{"title":"Boost Stride - Professional Auto Shop","keywords":"car repair, auto shop, maintenance","description":"Professional automotive services you can trust."}');
+('hero_data', '{"subtitle":"Welcome To Boost Stride","title":"Best Automotive & Maintenance Services","description":"Professional car repair and maintenance services for all makes and models."}'),
+('contact_info', '{"address":"123 Street, Hobart, Australia","phone":"+012 345 6789","email":"info@example.com"}'),
+('seo_data', '{"title":"Hobart Auto Shop - Professional Car Care","keywords":"car repair, hobart, auto shop, maintenance","description":"Professional automotive services you can trust in Hobart."}'),
+('theme_config', '{"primary_color":"#4f46e5","secondary_color":"#7c3aed","font_family":"Outfit"}');
 
 -- --------------------------------------------------------
 
@@ -44,17 +45,10 @@ CREATE TABLE IF NOT EXISTS `services` (
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `services`
---
-INSERT INTO `services` (`title`, `description`, `image`, `sort_order`) VALUES
-('General Auto Repair', 'Stet stet justo dolor sed duo. Ut clita sea sit ipsum diam lorem diam.', 'img/service-1.jpg', 1),
-('Brake Services', 'Precision braking system maintenance and repair for your safety.', 'img/service-2.jpg', 2),
-('Tire Replacement', 'High-quality tire brands and professional installation services.', 'img/service-3.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -70,12 +64,41 @@ CREATE TABLE IF NOT EXISTS `testimonials` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `testimonials`
+-- Table structure for table `pages`
 --
-INSERT INTO `testimonials` (`name`, `profession`, `text`, `image`) VALUES
-('James Wilson', 'Car Owner', 'Boost Stride provided exceptional service for my vehicle. Highly recommended!', 'img/testimonial-1.jpg'),
-('Sarah Jenkins', 'Fleet Manager', 'Reliable and professional. They keep our business vehicles on the road.', 'img/testimonial-2.jpg');
+CREATE TABLE IF NOT EXISTS `pages` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `slug` VARCHAR(100) UNIQUE NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `content` LONGTEXT,
+    `meta_title` VARCHAR(255),
+    `meta_description` TEXT,
+    `header_image` VARCHAR(255),
+    `featured_image` VARCHAR(255),
+    `video_url` VARCHAR(255),
+    `external_link` VARCHAR(255),
+    `status` ENUM('draft', 'published') DEFAULT 'published',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leads`
+--
+CREATE TABLE IF NOT EXISTS `leads` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `subject` VARCHAR(255),
+    `message` TEXT,
+    `status` ENUM('new', 'read', 'responded') DEFAULT 'new',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 

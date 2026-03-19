@@ -55,6 +55,9 @@ switch($page) {
     case 'custom_pages':
         include 'views/pages/custom_pages.php';
         break;
+    case 'leads':
+        include 'views/pages/leads.php';
+        break;
     default:
         include 'views/pages/dashboard.php';
         break;

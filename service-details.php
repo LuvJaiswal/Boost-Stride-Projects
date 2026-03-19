@@ -1,8 +1,10 @@
 <?php 
 require_once 'admin/core/Config.php';
 require_once 'admin/core/Database.php';
+require_once 'admin/Core/Renderer.php';
 
 use Core\Database;
+use Core\Renderer;
 
 $db = Database::getInstance();
 $id = $_GET['id'] ?? '';
@@ -58,7 +60,7 @@ include 'includes/header.php';
                     <div class="service-body-content">
                         <?php 
                             if (!empty($serviceData['content'])) {
-                                echo $serviceData['content']; 
+                                echo Renderer::content($serviceData['content']); 
                             } else {
                                 echo '<p class="lead">' . htmlspecialchars($serviceData['description']) . '</p>';
                                 echo '<div class="alert alert-light border-0 shadow-sm p-4 mt-5">

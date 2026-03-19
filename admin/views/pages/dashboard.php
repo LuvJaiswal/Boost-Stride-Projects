@@ -88,13 +88,75 @@ $mysql_version = $db->query("SELECT VERSION()")->fetchColumn();
 <div class="row g-4">
     <!-- Quick Management -->
     <div class="col-12 col-lg-8">
-        <div class="card p-4 h-100 border-0 shadow-lg">
+        <div class="card p-4 h-100 border-0 shadow-lg mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div>
+                    <h5 class="fw-bold mb-1">Recent Customer Leads</h5>
+                    <p class="text-muted small mb-0">Latest inquiries from your website contact form.</p>
+                </div>
+                <a href="?page=leads" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm fw-bold">View All Leads</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light bg-opacity-50">
+                        <tr>
+                            <th class="border-0 small text-muted text-uppercase fw-bold letter-spacing-1 py-3 px-4">Contact</th>
+                            <th class="border-0 small text-muted text-uppercase fw-bold letter-spacing-1 py-3">Subject</th>
+                            <th class="border-0 small text-muted text-uppercase fw-bold letter-spacing-1 py-3 text-end px-4">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        try {
+                            $table_check = $db->query("SHOW TABLES LIKE 'leads'")->fetch();
+                            $recent_leads = $table_check ? $db->query("SELECT * FROM leads ORDER BY created_at DESC LIMIT 4")->fetchAll() : [];
+                            
+                            if (empty($recent_leads)): ?>
+                                <tr>
+                                    <td colspan="3" class="text-center py-5 text-muted small">
+                                        <?php echo !$table_check ? 'Lead management table not found. Please sync database.' : 'No inquiries yet.'; ?>
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($recent_leads as $lead): ?>
+                                    <tr>
+                                        <td class="py-3 px-4">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="bg-primary bg-opacity-10 text-primary fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; font-size: 0.8rem;">
+                                                    <?php echo strtoupper(substr($lead['name'], 0, 1)); ?>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold small"><?php echo htmlspecialchars($lead['name']); ?></div>
+                                                    <div class="extra-small text-muted"><?php echo htmlspecialchars($lead['email']); ?></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 small text-secondary">
+                                            <?php echo htmlspecialchars($lead['subject']); ?>
+                                            <?php if($lead['status'] === 'new'): ?>
+                                                <span class="badge bg-danger ms-2 rounded-pill" style="font-size: 0.5rem; padding: 0.2rem 0.5rem;">NEW</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="py-3 text-end px-4">
+                                            <span class="extra-small text-muted"><?php echo date('M d, H:i', strtotime($lead['created_at'])); ?></span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; 
+                        } catch (Exception $e) {
+                            echo '<tr><td colspan="3" class="text-center py-3 text-danger small">Error loading leads.</td></tr>';
+                        } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="card p-4 border-0 shadow-lg">
             <div class="d-flex justify-content-between align-items-center mb-5">
                 <div>
                     <h5 class="fw-bold mb-1">Management Portal</h5>
                     <p class="text-muted small mb-0">Direct access to core website modules.</p>
                 </div>
-                <button class="btn btn-light rounded-circle p-2" title="Refresh Links"><i class="fas fa-sync-alt fa-sm"></i></button>
             </div>
             <div class="row g-4">
                 <div class="col-12 col-md-6">

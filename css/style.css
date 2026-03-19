@@ -632,6 +632,8 @@
 html, body {
     overflow-x: hidden;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 img {
@@ -642,16 +644,21 @@ img {
 /* ── Navbar ── */
 @media (max-width: 991.98px) {
     .navbar-light .navbar-nav .nav-link {
-        padding: 10px 16px;
+        padding: 12px 20px;
         margin-right: 0;
         border-bottom: 1px solid rgba(0,0,0,0.04);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--dark) !important;
     }
 
     .navbar-collapse {
         padding: 0.5rem 1rem 1rem;
         background: #fff;
         border-top: 1px solid #f0f0f0;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-height: 80vh;
+        overflow-y: auto;
     }
 
     .navbar-brand {
@@ -659,290 +666,343 @@ img {
     }
 
     .navbar-brand h2 {
-        font-size: 1.4rem !important;
+        font-size: 1.35rem !important;
+        margin: 0 !important;
     }
 
-    /* Hide the desktop CTA button on small screens — it overlaps */
-    #nav-cta-button.d-none { display: none !important; }
+    .navbar-toggler {
+        padding: 4px 8px;
+        font-size: 1.1rem;
+        border: none;
+    }
 
-    /* Mobile-friendly CTA at bottom of collapsed menu */
-    .navbar-nav + a.btn {
-        display: block;
-        margin: 8px 16px 4px;
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    /* Mobile CTA */
+    #navbarCollapse .btn-primary {
+        display: block !important;
+        margin: 1rem 10px 0.5rem;
+        padding: 12px;
         text-align: center;
+        border-radius: 10px;
+        font-size: 14px;
     }
 }
 
-@media (max-width: 575.98px) {
-    .navbar-brand h2 {
-        font-size: 1.2rem !important;
+/* ── Topbar (Address/Phone) ── */
+@media (max-width: 991.98px) {
+    .container-fluid.bg-light.p-0 {
+        display: none !important; /* Hide complicated topbar on mobile for cleaner look */
     }
 }
 
-/* ── Page Header Banner ── */
+/* ── Page Header ── */
 @media (max-width: 767.98px) {
     .page-header {
-        min-height: 200px;
-        padding: 40px 0 !important;
+        min-height: 160px;
+        padding: 50px 0 !important;
+        margin-bottom: 2rem !important;
+        background-attachment: scroll !important; /* Performance boost on mobile */
     }
 
     .page-header h1 {
-        font-size: clamp(1.6rem, 6vw, 2.5rem) !important;
+        font-size: clamp(1.8rem, 8vw, 2.5rem) !important;
+        letter-spacing: -0.5px;
     }
 
     .breadcrumb {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        justify-content: center;
+        margin-top: 10px;
     }
 }
 
 /* ── Section Headings ── */
 @media (max-width: 767.98px) {
     .section-title h1 {
-        font-size: clamp(1.5rem, 5.5vw, 2rem) !important;
-        padding: 0 30px;
+        font-size: clamp(1.6rem, 7vw, 2.22rem) !important;
+        padding: 0 20px;
+        margin-bottom: 2rem !important;
+        line-height: 1.3;
     }
 
     .section-title h1::before,
     .section-title h1::after {
-        width: 25px;
+        width: 30px;
+        height: 4px;
     }
 
     .display-5 {
-        font-size: clamp(1.4rem, 5vw, 2rem) !important;
+        font-size: clamp(1.65rem, 6vw, 2.2rem) !important;
+        line-height: 1.25;
     }
 
     .display-3 {
-        font-size: clamp(1.8rem, 7vw, 3rem) !important;
+        font-size: clamp(2rem, 10vw, 3.5rem) !important;
+        line-height: 1.15;
     }
 }
 
 /* ── Hero Carousel ── */
 @media (max-width: 767.98px) {
     .header-carousel .owl-carousel-item {
-        min-height: 420px !important;
+        min-height: 480px !important;
     }
 
     .header-carousel .owl-carousel-item .container {
-        text-align: center;
+        padding: 0 25px;
+        text-align: center !important;
     }
 
     .header-carousel .owl-carousel-item h5 {
-        font-size: 13px !important;
+        font-size: 11px !important;
+        letter-spacing: 2.5px;
+        margin-bottom: 15px !important;
     }
 
     .header-carousel .owl-carousel-item h1 {
-        font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+        font-size: clamp(1.8rem, 9vw, 2.8rem) !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .header-carousel .owl-carousel-item p {
+        font-size: 14px !important;
+        line-height: 1.6;
+        margin-bottom: 30px !important;
+        padding: 0 10px;
     }
 
     .header-carousel .owl-nav {
-        bottom: 15px;
-        width: 120px;
+        bottom: 25px;
+        width: 100px;
     }
 
     .header-carousel .owl-nav .owl-prev,
     .header-carousel .owl-nav .owl-next {
         width: 35px;
         height: 35px;
-        font-size: 16px;
+        font-size: 14px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(5px);
+    }
+
+    .header-carousel .btn {
+        width: calc(50% - 15px);
+        padding: 12px 10px !important;
+        font-size: 13px !important;
+        margin: 5px !important;
     }
 }
 
 /* ── About Section ── */
 @media (max-width: 991.98px) {
-    .container.about {
-        max-width: 100% !important;
+    .about-text {
+        padding: 50px 20px !important;
+        text-align: center !important;
     }
 
-    .about-img img {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        border-radius: 8px;
+    .about-text .section-title {
+        text-align: center !important;
+    }
+
+    .about-text .row.g-4 {
+        margin-top: 2rem;
+        justify-content: center;
+    }
+
+    .about-text .col-sm-6 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .about-text .btn {
+        display: block;
+        max-width: 250px;
+        margin: 2rem auto 0;
+        padding: 15px 30px;
+    }
+
+    .container-fluid.bg-light.my-5 > .container > .row.g-0 > div:first-child {
+        min-height: 300px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .about-text h2[data-id="about-clients"],
+    .about-text h2[data-id="about-repairs"] {
+        font-size: 1.8rem;
+    }
+}
+
+/* ── Features ── */
+@media (max-width: 767.98px) {
+    #features-container .col-md-6 {
+        padding-bottom: 1.5rem;
     }
 }
 
 /* ── Services ── */
 @media (max-width: 767.98px) {
     .service-item {
-        margin-bottom: 1.5rem;
-    }
-
-    .service-item img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .service-item img {
-        height: 190px;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
     }
 }
 
 /* ── Team Section ── */
-.team-item {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.team-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.13);
-}
-
 @media (max-width: 767.98px) {
-    /* Show 2 columns of team on mobile */
-    #team-container .col-lg-3.col-md-6 {
-        width: 50% !important;
-        flex: 0 0 50% !important;
-        max-width: 50% !important;
-    }
-
-    .team-item .overflow-hidden img {
-        height: 240px !important;
-    }
-
-    .team-item .text-center.p-4 {
-        padding: 1rem !important;
-    }
-
-    .team-item h5 {
-        font-size: 0.95rem;
-    }
-
-    .team-item small {
-        font-size: 0.68rem !important;
-    }
-}
-
-@media (max-width: 479px) {
-    /* Single column on very small screens */
-    #team-container .col-lg-3.col-md-6 {
+    #team-container .col-lg-3, 
+    #team-container .col-md-6 {
         width: 100% !important;
         flex: 0 0 100% !important;
         max-width: 100% !important;
     }
-
-    .team-item .overflow-hidden img {
-        height: 300px !important;
+    
+    .team-item {
+        max-width: 320px;
+        margin: 0 auto 2rem;
     }
 }
 
 /* ── Testimonials ── */
 @media (max-width: 767.98px) {
-    .testimonial-carousel::before,
-    .testimonial-carousel::after {
-        width: 40px !important;
-    }
-
     .testimonial-carousel .testimonial-text {
-        padding: 1.2rem !important;
+        padding: 2rem 1.5rem !important;
+        margin: 0 10px;
+    }
+    
+    .testimonial-carousel .testimonial-text p {
+        font-size: 15px;
+        line-height: 1.6;
     }
 
     .testimonial-carousel .owl-nav {
-        width: 200px;
+        width: 160px;
+        top: -5px;
     }
 }
 
-/* ── Feature Section ── */
+/* ── Contact Section ── */
 @media (max-width: 991.98px) {
-    .container.feature {
-        max-width: 100% !important;
+    .contact-text {
+        padding: 40px 20px !important;
     }
 
-    .feature-text {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-}
-
-/* ── Quote / CTA Section ── */
-@media (max-width: 991.98px) {
-    .container.quote {
-        max-width: 100% !important;
-    }
-
-    .quote-text {
-        padding: 1.5rem !important;
+    .contact .row.g-0 > div:first-child {
+        min-height: 350px !important;
     }
 }
 
 /* ── Footer ── */
 @media (max-width: 767.98px) {
-    .footer .row > div {
-        margin-bottom: 2rem;
+    .footer {
+        padding-top: 4rem !important;
+        padding-bottom: 1rem !important;
     }
 
-    .footer h4 {
-        font-size: 1.1rem;
+    .footer .col-lg-3 {
+        margin-bottom: 3.5rem;
+        text-align: center;
     }
 
-    .footer .btn.btn-link {
-        font-size: 14px;
+    .footer .section-title {
+        text-align: center !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .footer .section-title h4::after {
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
+
+    .footer .d-flex.pt-2 {
+        justify-content: center !important;
+    }
+
+    .footer .btn-link {
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    .footer .btn-link::before {
+        display: none;
     }
 
     .footer .copyright {
+        padding: 20px 0;
         text-align: center;
-        font-size: 13px;
+        margin-top: 1rem;
     }
 
     .footer .copyright .col-md-6:last-child {
         text-align: center !important;
-        margin-top: 8px;
+        margin-top: 15px;
     }
 }
 
-/* ── Spacing & Container Tweaks ── */
-@media (max-width: 767.98px) {
-    .container-xxl.py-5,
-    .container-xxl.py-5 > .container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+/* ── Global Form Fixes ── */
+@media (max-width: 575.98px) {
+    .form-control, .form-select, textarea {
+        font-size: 16px !important; /* Prevents iOS font bump */
+        padding: 12px 18px !important;
     }
 
-    section,
-    .py-5 {
-        padding-top: 3rem !important;
-        padding-bottom: 3rem !important;
+    .btn {
+        width: 100%;
+        margin-bottom: 12px !important;
+        padding: 14px 25px !important;
+        font-size: 14px;
+    }
+
+    /* Container Spacing */
+    .container-xxl.py-5 {
+        padding-top: 3.5rem !important;
+        padding-bottom: 3.5rem !important;
     }
 }
 
 /* ── Back to Top Button ── */
-@media (max-width: 575.98px) {
+@media (max-width: 767.98px) {
     .back-to-top {
         right: 20px;
         bottom: 20px;
-        width: 40px !important;
-        height: 40px !important;
+        width: 45px;
+        height: 45px;
     }
 }
 
-/* ── Contact Page ── */
-@media (max-width: 991.98px) {
-    .container.contact {
-        max-width: 100% !important;
+/* ── Dynamic Content / Summernote Support ── */
+@media (max-width: 767.98px) {
+    .wp-block-quote {
+        padding: 1.5rem !important;
+        font-size: 1.1rem;
     }
 
-    .contact-text {
+    .wp-block-quote i {
+        font-size: 2rem !important;
+    }
+
+    .row.my-5 {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .row.my-5 [class*="col-"] {
+        margin-bottom: 2rem;
+    }
+
+    .p-5.my-5 {
         padding: 1.5rem !important;
     }
 }
 
-/* ── Forms ── */
-@media (max-width: 575.98px) {
-    .form-control,
-    .form-select,
-    textarea.form-control {
-        font-size: 16px; /* Prevent iOS zoom on focus */
-    }
-}
-
-/* ── Tables on mobile ── */
-@media (max-width: 767.98px) {
-    .table-responsive {
-        -webkit-overflow-scrolling: touch;
-    }
-}
+/* Custom Scrollbar for modern feel */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #8e5d33; }
